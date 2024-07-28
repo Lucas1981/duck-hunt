@@ -1,0 +1,7 @@
+[
+    { include: ["<__fwd/sstream.h>", "public", "<sstream>", "public"] },
+    { include: ["<__fwd/fstream.h>", "public", "<fstream>", "public"] },
+    { include: ["<__math/modulo.h>", "public", "<cmath>", "public"] },
+    { include: ["<SFML/Graphics/Rect.inl>", "public", "<SFML/Graphics/Rect.hpp>", "public"]},
+    { include: ["<SFML/System/Vector2.inl>", "public", "<SFML/System/Vector2.hpp>", "public"]}
+]
