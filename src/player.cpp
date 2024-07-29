@@ -25,21 +25,12 @@ void Player::draw(sf::RenderTarget& target) {
 void Player::update() {
     double elapsedTime = clock.getElapsedTime();
     animator.update((float)elapsedTime);
-    // double distanceTraveled = elapsedTime * speed;
-
-    // if (input.isKeyPressed(sf::Keyboard::Up)) {
-    //     y = std::max(UPPER_BOUND, y - distanceTraveled);
-    // }
-    // if (input.isKeyPressed(sf::Keyboard::Down)) {
-    //     y = std::min(LOWER_BOUND, y + distanceTraveled);
-    // }
-    // if (input.isKeyPressed(sf::Keyboard::Left)) {
-    //     x = std::max(LEFT_BOUND, x - distanceTraveled);
-    // }
-    // if (input.isKeyPressed(sf::Keyboard::Right)) {
-    //     x = std::min(RIGHT_BOUND, x + distanceTraveled);
-    // }
     sf::Vector2i mousePosition = input.getMousePosition();
     x = static_cast<double>(mousePosition.x);
     y = static_cast<double>(mousePosition.y);
+
+    if (x < LEFT_BOUND) x = LEFT_BOUND;
+    if (x > RIGHT_BOUND) x = RIGHT_BOUND;
+    if (y < UPPER_BOUND) y = UPPER_BOUND;
+    if (y > LOWER_BOUND) y = LOWER_BOUND;
 }

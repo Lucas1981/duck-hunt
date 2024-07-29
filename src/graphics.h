@@ -1,8 +1,9 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <SFML/Graphics/RenderWindow.hpp>  // for RenderWindow
-namespace sf { class RenderTarget; }
+#include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
+#include <SFML/Graphics/RenderWindow.hpp>   // for RenderWindow
+namespace sf { class RenderTarget; }  // lines 6-6
 
 class Graphics {
 public:
@@ -18,10 +19,14 @@ public:
     void showCursor();
     sf::RenderWindow& getWindow();
     sf::RenderTarget& getRenderTarget();
+    void clearCanvas();
+    void displayCanvas();
+    sf::RenderTexture& getCanvas();
 
 private:
     void cleanup();
     sf::RenderWindow window;
+    sf::RenderTexture canvas;
 };
 
 #endif // GRAPHICS_H

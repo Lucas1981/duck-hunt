@@ -1,7 +1,9 @@
 #include "game.h"
-#include <SFML/Window/Keyboard.hpp>  // for Keyboard
-#include <iostream>                  // for basic_ostream, char_traits, oper...
-#include "player.h"                  // for Player
+#include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
+#include <SFML/Window/Keyboard.hpp>         // for Keyboard
+#include <iostream>                         // for basic_ostream, char_traits
+#include "player.h"                         // for Player
+namespace sf { class RenderTarget; }  // lines 5-5
 
 Game::Game() : player(nullptr) {}
 
@@ -23,7 +25,7 @@ void Game::run() {
             graphics.closeWindow();
         }
 
-        graphics.clearWindow();
+        // graphics.clearWindow();
 
         switch (gameState.getState()) {
             case GameStateType::TITLE_SCREEN:
@@ -50,8 +52,11 @@ void Game::handleReadyState() {
 }
 
 void Game::handleRunningState() {
+    sf::RenderTarget& renderTarget = graphics.getCanvas();
+    screens.drawScreen(renderTarget, ScreenType::GAME_SCREEN);
     player->update();
-    player->draw(graphics.getRenderTarget());  // Pass the render target to draw
+    player->draw(renderTarget);  // Pass the render target to draw
+    graphics.displayCanvas();
 }
 
 bool Game::initialize() {

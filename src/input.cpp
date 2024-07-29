@@ -1,7 +1,6 @@
 // input.cpp
 #include "input.h"
 #include <SFML/Graphics/RenderWindow.hpp>  // for RenderWindow
-// #include <SFML/System/Vector2.inl>         // for Vector2::Vector2<T>
 #include <SFML/Window/Event.hpp>           // for Event
 
 Input::Input() {
