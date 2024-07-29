@@ -16,10 +16,10 @@ public:
     void draw(sf::RenderTarget& target) override;
 
 private:
-    static constexpr double LEFT_BOUND = 0;
-    static constexpr double RIGHT_BOUND = SCREEN_WIDTH - UNIT_SIZE;
-    static constexpr double UPPER_BOUND = 0;
-    static constexpr double LOWER_BOUND = SCREEN_HEIGHT - UNIT_SIZE;
+    static constexpr double LEFT_BOUND = UNIT_SIZE / 2;
+    static constexpr double RIGHT_BOUND = SCREEN_WIDTH + (UNIT_SIZE / 2);
+    static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
+    static constexpr double LOWER_BOUND = SCREEN_HEIGHT + (UNIT_SIZE / 2);
     static constexpr double speed = 250;
     Input& input;
     Clock& clock;
