@@ -26,8 +26,9 @@ void Player::update() {
     double elapsedTime = clock.getElapsedTime();
     animator.update((float)elapsedTime);
     sf::Vector2i mousePosition = input.getMousePosition();
-    x = static_cast<double>(mousePosition.x);
-    y = static_cast<double>(mousePosition.y);
+    double halfUnitSize = UNIT_SIZE / 2;
+    x = static_cast<double>(mousePosition.x + halfUnitSize);
+    y = static_cast<double>(mousePosition.y + halfUnitSize);
 
     if (x < LEFT_BOUND) x = LEFT_BOUND;
     if (x > RIGHT_BOUND) x = RIGHT_BOUND;

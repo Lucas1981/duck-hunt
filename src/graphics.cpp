@@ -4,15 +4,15 @@
 #include <SFML/Graphics/Sprite.hpp>   // for Sprite
 #include <SFML/System/String.hpp>     // for String
 #include <SFML/Window/VideoMode.hpp>  // for VideoMode
-#include "constants.h"                // for UNIT_SIZE, SCREEN_HEIGHT, SCREE...
-namespace sf { class RenderTarget; }  // lines 6-6
+#include "constants.h"                // for SCREEN_HEIGHT, UNIT_SIZE, SCREE...
+namespace sf { class RenderTarget; }  // lines 9-9
 
 using namespace Constants;
 
 Graphics::Graphics() {
     createWindow();
     hideCursor();
-    canvas.create(800 + (size_t)(2 * UNIT_SIZE), 600 + (size_t)(UNIT_SIZE * 2));
+    canvas.create((int)SCREEN_WIDTH + (size_t)(2 * UNIT_SIZE), (int)SCREEN_HEIGHT + (size_t)(UNIT_SIZE * 2));
 }
 
 Graphics::~Graphics() {
@@ -61,10 +61,11 @@ void Graphics::clearCanvas() {
 
 void Graphics::displayCanvas() {
     sf::Sprite sprite(canvas.getTexture());
+
     sprite.setTextureRect(sf::IntRect(
-        (int)UNIT_SIZE, (int)UNIT_SIZE, (int)(SCREEN_WIDTH), (int)(SCREEN_HEIGHT)
+        (int)UNIT_SIZE, (int)SCREEN_HEIGHT + (int)UNIT_SIZE, (int)(SCREEN_WIDTH), -1 * (int)(SCREEN_HEIGHT)
     ));
-    sprite.setPosition(0, 0);
+
     window.draw(sprite);
 }
 
