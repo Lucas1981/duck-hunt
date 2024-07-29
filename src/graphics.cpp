@@ -63,7 +63,10 @@ void Graphics::displayCanvas() {
     sf::Sprite sprite(canvas.getTexture());
 
     sprite.setTextureRect(sf::IntRect(
-        (int)UNIT_SIZE, (int)SCREEN_HEIGHT + (int)UNIT_SIZE, (int)(SCREEN_WIDTH), -1 * (int)(SCREEN_HEIGHT)
+        (int)UNIT_SIZE,
+        (int)SCREEN_HEIGHT + (int)UNIT_SIZE,
+        (int)(SCREEN_WIDTH),
+        -1 * (int)(SCREEN_HEIGHT)
     ));
 
     window.draw(sprite);
