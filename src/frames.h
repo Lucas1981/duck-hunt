@@ -16,18 +16,14 @@ struct Frame {
 
 class Frames {
 public:
-    static Frames& getInstance();
+    Frames();
+    ~Frames() = default;
+
     void loadTexture(const std::string& filePath);
     void addFrame(float x, float y, float w, float h);
     void draw(sf::RenderTarget& target, float dx, float dy, int frameIndex);
 
 private:
-    Frames();
-    ~Frames() = default;
-
-    Frames(const Frames&) = delete;
-    Frames& operator=(const Frames&) = delete;
-
     sf::Texture texture;
     sf::Sprite sprite;
     std::vector<Frame> frames;

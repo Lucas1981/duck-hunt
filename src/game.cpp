@@ -62,7 +62,7 @@ void Game::handleRunningState() {
 bool Game::initialize() {
     std::cout << "Initializing...\n";
     input.setWindow(graphics.getWindow());
-    player = new Player(input, clock);
+    player = new Player(input, animator);
     return true;
 }
 

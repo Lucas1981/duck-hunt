@@ -6,6 +6,7 @@
 #include "input.h"     // for Input
 #include "state.h"     // for GameState
 #include "screens.h"
+#include "animator.h"
 class Player;
 
 class Game {
@@ -26,6 +27,7 @@ private:
     Clock clock;
     Player* player;
     Screens screens;
+    Animator animator;
 };
 
 #endif // GAME_H

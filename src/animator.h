@@ -2,22 +2,18 @@
 #define ANIMATOR_H
 
 #include "animations.h"  // for AnimationIndex
-class Frames;
+#include "frames.h"      // for Frames
 namespace sf { class RenderTarget; }
 
 class Animator {
 public:
-    Animator(Animations::AnimationIndex initialAnimation);
-    void changeAnimation(Animations::AnimationIndex animationIndex);
-    void draw(sf::RenderTarget& target, float x, float y);
-    void update(float deltaTime);
+    static constexpr int FRAMES_PER_SECOND = 10;  // Set the frames per second
+
+    Animator();
+    void draw(sf::RenderTarget& target, float x, float y, Animations::AnimationIndex animationType, float elapsedTime);
 
 private:
-    Animations::AnimationIndex currentAnimation;
-    int currentFrame;
-    float frameTime;
-    float elapsedTime;
-    Frames& frames;
+    Frames frames;  // Frames instance
 };
 
 #endif // ANIMATOR_H

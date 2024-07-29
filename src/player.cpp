@@ -2,12 +2,12 @@
 #include <SFML/Graphics/Rect.hpp>   // for FloatRect, Rect::Rect<T>
 #include <SFML/System/Vector2.hpp>  // for Vector2i
 #include "animations.h"             // for AnimationIndex
-#include "clock.h"                  // for Clock
+#include "animator.h"               // for Animator
 #include "input.h"                  // for Input
-namespace sf { class RenderTarget; }  // lines 8-8
+namespace sf { class RenderTarget; }  // lines 6-6
 
-Player::Player(Input& _input, Clock& _clock)
-    : input(_input), clock(_clock), animator(Animations::CROSSHAIRS) {
+Player::Player(Input& _input, Animator& _animator)
+    : input(_input), animator(_animator) {
     x = 240.0;
     y = 240.0;
     type = AgentType::PLAYER;
@@ -19,12 +19,16 @@ Player::Player(Input& _input, Clock& _clock)
 void Player::draw(sf::RenderTarget& target) {
     // animator->draw(target, static_cast<float>(x), static_cast<float>(y));
     // std::cout << x << ' ' << y << '\n';
-    animator.draw(target, static_cast<float>(x), static_cast<float>(y));
+    animator.draw(
+        target,
+        static_cast<float>(x),
+        static_cast<float>(y),
+        Animations::CROSSHAIRS,
+        0
+    );
 }
 
 void Player::update() {
-    double elapsedTime = clock.getElapsedTime();
-    animator.update((float)elapsedTime);
     sf::Vector2i mousePosition = input.getMousePosition();
     double halfUnitSize = UNIT_SIZE / 2;
     x = static_cast<double>(mousePosition.x + halfUnitSize);
