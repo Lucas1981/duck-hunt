@@ -1,15 +1,12 @@
 #include "game.h"
-#include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
-#include <SFML/Window/Keyboard.hpp>         // for Keyboard
-#include <iostream>                         // for basic_ostream, operator<<
-#include <iterator>                         // for next
-#include "actor.h"                          // for Actor
-#include "collision.h"                      // for checkHitboxCollision
-#include "duck.h"                           // for Duck
-#include "player.h"                         // for Player
-namespace sf { class RenderTarget; }  // lines 10-10
+#include <SFML/Window/Keyboard.hpp>  // for Keyboard
+#include <iostream>                  // for basic_ostream, char_traits, oper...
+#include "actor.h"                   // for Actor
+#include "duck.h"                    // for Duck
+#include "play.h"                    // for Play
+#include "player.h"                  // for Player
 
-Game::Game() : player(nullptr) {}
+Game::Game() : play(nullptr) {}
 
 Game::~Game() {
     cleanup();
@@ -56,29 +53,7 @@ void Game::handleReadyState() {
 }
 
 void Game::handleRunningState() {
-    sf::RenderTarget& renderTarget = graphics.getCanvas();
-    screens.drawScreen(renderTarget, ScreenType::GAME_SCREEN);
-
-    for (auto actor : actors) {
-        actor->update();
-    }
-
-    for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-        for (auto it2 = std::next(it1); it2 != actors.end(); ++it2) {
-            if (
-                checkHitboxCollision((*it1)->getTranslatedHitbox(),
-                (*it2)->getTranslatedHitbox())
-            ) {
-                std::cout << "Collision detected!" << std::endl;
-            }
-        }
-    }
-
-    for (auto actor : actors) {
-        actor->draw(renderTarget); // No offset needed
-    }
-    
-    graphics.displayCanvas();
+    play->run();
 }
 
 bool Game::initialize() {
@@ -86,10 +61,15 @@ bool Game::initialize() {
     input.setWindow(graphics.getWindow());
     actors.push_back(new Duck(animator, clock));
     actors.push_back(new Player(input, animator));
+    play = new Play(graphics, screens, actors);
     return true;
 }
 
 void Game::cleanup() {
-    delete player;
+    delete play;
+    for (auto actor : actors) {
+        delete actor;
+    }
+    actors.clear();
     std::cout << "Goodbye!\n";
 }

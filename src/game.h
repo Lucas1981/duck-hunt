@@ -8,8 +8,8 @@
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
 #include "state.h"     // for GameState
-class Actor;
-class Player;  // lines 12-12
+class Actor;  // lines 12-12
+class Play;
 
 class Game {
 public:
@@ -27,10 +27,10 @@ private:
     Input input;
     Graphics graphics;
     Clock clock;
-    Player* player;
     Screens screens;
     Animator animator;
     std::list<Actor*> actors;  // Use a list to store agents
+    Play* play;
 };
 
 #endif // GAME_H
