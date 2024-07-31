@@ -7,7 +7,7 @@ namespace sf { class RenderTarget; }
 
 class Animator {
 public:
-    static constexpr int FRAMES_PER_SECOND = 10;  // Set the frames per second
+    static constexpr int FRAMES_PER_SECOND = 8;  // Set the frames per second
 
     Animator();
     void draw(sf::RenderTarget& target, float x, float y, Animations::AnimationIndex animationType, float elapsedTime);

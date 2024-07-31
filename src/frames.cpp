@@ -8,6 +8,8 @@ Frames::Frames() {
     // Default constructor
     loadTexture("../assets/spritesheet.png");
     addFrame(0, 0, 128, 128);
+    addFrame(128, 0, 128, 128);
+    addFrame(256, 0, 128, 128);
 }
 
 void Frames::loadTexture(const std::string& filePath) {
@@ -23,11 +25,11 @@ void Frames::addFrame(float x, float y, float w, float h) {
 }
 
 void Frames::draw(sf::RenderTarget& target, float dx, float dy, int frameIndex) {
-    if (frameIndex < 0 || frameIndex >= (int)frames.size()) {
+    if (frameIndex < 0 || frameIndex >= static_cast<int>(frames.size())) {
         std::cerr << "Invalid frame index: " << frameIndex << std::endl;
         return;
     }
-    const Frame& frame = frames[(size_t)frameIndex];
+    const Frame& frame = frames[static_cast<size_t>(frameIndex)];
     sprite.setTextureRect(sf::IntRect(
         static_cast<int>(frame.x),
         static_cast<int>(frame.y),

@@ -8,7 +8,9 @@ Todo:
     - [x] Title screen
     - [x] Background
 - [x] Add double-buffer layer
+- [ ] Add listener on red window button
 - [ ] Add ducks
+- [ ] Refactor game loop out to play module
 - [ ] Add shot white-overlay
 - [ ] Add collision
 - [ ] Refine gameplay lifecycle:

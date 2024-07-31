@@ -1,13 +1,15 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <list>        // for list
+#include "animator.h"  // for Animator
 #include "clock.h"     // for Clock
 #include "graphics.h"  // for Graphics
 #include "input.h"     // for Input
+#include "screens.h"   // for Screens
 #include "state.h"     // for GameState
-#include "screens.h"
-#include "animator.h"
-class Player;
+class Actor;
+class Player;  // lines 12-12
 
 class Game {
 public:
@@ -28,6 +30,7 @@ private:
     Player* player;
     Screens screens;
     Animator animator;
+    std::list<Actor*> actors;  // Use a list to store agents
 };
 
 #endif // GAME_H

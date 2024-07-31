@@ -2,8 +2,10 @@
 #include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
 #include <SFML/Window/Keyboard.hpp>         // for Keyboard
 #include <iostream>                         // for basic_ostream, char_traits
+#include "actor.h"                          // for Actor
+#include "duck.h"                           // for Duck
 #include "player.h"                         // for Player
-namespace sf { class RenderTarget; }  // lines 5-5
+namespace sf { class RenderTarget; }  // lines 7-7
 
 Game::Game() : player(nullptr) {}
 
@@ -54,15 +56,23 @@ void Game::handleReadyState() {
 void Game::handleRunningState() {
     sf::RenderTarget& renderTarget = graphics.getCanvas();
     screens.drawScreen(renderTarget, ScreenType::GAME_SCREEN);
-    player->update();
-    player->draw(renderTarget);  // Pass the render target to draw
+
+    for (auto actor : actors) {
+        actor->update();
+    }
+
+    for (auto actor : actors) {
+        actor->draw(renderTarget); // No offset needed
+    }
+    
     graphics.displayCanvas();
 }
 
 bool Game::initialize() {
     std::cout << "Initializing...\n";
     input.setWindow(graphics.getWindow());
-    player = new Player(input, animator);
+    actors.push_back(new Duck(animator, clock));
+    actors.push_back(new Player(input, animator));
     return true;
 }
 

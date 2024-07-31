@@ -12,13 +12,11 @@ Player::Player(Input& _input, Animator& _animator)
     y = 240.0;
     type = AgentType::PLAYER;
     state = AgentState::IDLE;
-    hitbox = sf::FloatRect((float)x, (float)y, 32, 32);  // Example hitbox size
+    hitbox = sf::FloatRect(static_cast<float>(x), static_cast<float>(y), 32, 32);  // Example hitbox size
     // animator = new Animator();
 }
 
 void Player::draw(sf::RenderTarget& target) {
-    // animator->draw(target, static_cast<float>(x), static_cast<float>(y));
-    // std::cout << x << ' ' << y << '\n';
     animator.draw(
         target,
         static_cast<float>(x),
