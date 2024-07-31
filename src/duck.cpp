@@ -13,12 +13,18 @@ Duck::Duck(Animator& _animator, Clock& _clock) : clock(_clock), animator(_animat
     y = 300.0;
     type = AgentType::DUCK;
     state = AgentState::IDLE;
-    hitbox = sf::FloatRect(0, 0, UNIT_SIZE, UNIT_SIZE);  // Example hitbox size
     startTime = clock.getCurrentTime();
+    animationKey = Animations::FLY_HORIZONTAL_RIGHT;
+    initializeHitboxes();
 }
 
 Duck::~Duck() {
     // Handle destruction
+}
+
+void Duck::initializeHitboxes() {
+    hitboxes[Animations::FLY_HORIZONTAL_RIGHT] = sf::FloatRect(0, 0, UNIT_SIZE, UNIT_SIZE);
+    // Add other hitboxes as needed
 }
 
 void Duck::update() {
@@ -33,7 +39,14 @@ void Duck::draw(sf::RenderTarget& target) {
         target,
         static_cast<float>(x),
         static_cast<float>(y),
-        Animations::FLY_HORIZONTAL_RIGHT,
+        animationKey,
         static_cast<float>(elapsedTime)
     );
+}
+
+sf::FloatRect Duck::getTranslatedHitbox() const {
+    sf::FloatRect currentHitbox = hitboxes.at(animationKey);
+    currentHitbox.left += static_cast<float>(x);
+    currentHitbox.top += static_cast<float>(y);
+    return currentHitbox;
 }

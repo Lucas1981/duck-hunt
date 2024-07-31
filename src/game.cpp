@@ -1,11 +1,13 @@
 #include "game.h"
 #include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
 #include <SFML/Window/Keyboard.hpp>         // for Keyboard
-#include <iostream>                         // for basic_ostream, char_traits
+#include <iostream>                         // for basic_ostream, operator<<
+#include <iterator>                         // for next
 #include "actor.h"                          // for Actor
+#include "collision.h"                      // for checkHitboxCollision
 #include "duck.h"                           // for Duck
 #include "player.h"                         // for Player
-namespace sf { class RenderTarget; }  // lines 7-7
+namespace sf { class RenderTarget; }  // lines 10-10
 
 Game::Game() : player(nullptr) {}
 
@@ -59,6 +61,17 @@ void Game::handleRunningState() {
 
     for (auto actor : actors) {
         actor->update();
+    }
+
+    for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
+        for (auto it2 = std::next(it1); it2 != actors.end(); ++it2) {
+            if (
+                checkHitboxCollision((*it1)->getTranslatedHitbox(),
+                (*it2)->getTranslatedHitbox())
+            ) {
+                std::cout << "Collision detected!" << std::endl;
+            }
+        }
     }
 
     for (auto actor : actors) {

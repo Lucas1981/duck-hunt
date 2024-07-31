@@ -12,8 +12,7 @@ Player::Player(Input& _input, Animator& _animator)
     y = 240.0;
     type = AgentType::PLAYER;
     state = AgentState::IDLE;
-    hitbox = sf::FloatRect(static_cast<float>(x), static_cast<float>(y), 32, 32);  // Example hitbox size
-    // animator = new Animator();
+    hitbox = sf::FloatRect(60, 60, 8, 8);  // Example hitbox size
 }
 
 void Player::draw(sf::RenderTarget& target) {
@@ -36,4 +35,11 @@ void Player::update() {
     if (x > RIGHT_BOUND) x = RIGHT_BOUND;
     if (y < UPPER_BOUND) y = UPPER_BOUND;
     if (y > LOWER_BOUND) y = LOWER_BOUND;
+}
+
+sf::FloatRect Player::getTranslatedHitbox() const {
+    sf::FloatRect translatedHitbox = hitbox;
+    translatedHitbox.top += static_cast<float>(y);
+    translatedHitbox.left += static_cast<float>(x);
+    return translatedHitbox;
 }

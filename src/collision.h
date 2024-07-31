@@ -2,8 +2,7 @@
 #define COLLISION_H
 
 #include <SFML/Graphics/Rect.hpp>
-#include "frames.h"
 
-bool checkPixelCollision(const Frames& frames, int frameIndex, float frameX, float frameY, const sf::FloatRect& hitbox);
+bool checkHitboxCollision(const sf::FloatRect& hitbox1, const sf::FloatRect& hitbox2);
 
 #endif // COLLISION_H

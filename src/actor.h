@@ -25,13 +25,13 @@ public:
     virtual ~Actor() = default;
     virtual void update() = 0;
     virtual void draw(sf::RenderTarget& target) = 0;
+    virtual sf::FloatRect getTranslatedHitbox() const = 0;
 
 protected:
     double x;
     double y;
     AgentType type;
     AgentState state;
-    sf::FloatRect hitbox;
     Animator* animator;
 };
 
