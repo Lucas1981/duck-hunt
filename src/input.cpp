@@ -12,6 +12,11 @@ void Input::update() {
 
     prevKeyState = keyState;
 
+    for (int i = 0; i < sf::Mouse::ButtonCount; ++i) {
+        prevMouseState[i] = mouseState[i];
+        mouseState[i] = sf::Mouse::isButtonPressed(static_cast<sf::Mouse::Button>(i));
+    }
+
     sf::Event event;
     while (window->pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
@@ -31,9 +36,16 @@ bool Input::isKeyReleased(sf::Keyboard::Key key) {
 }
 
 bool Input::isMouseButtonPressed(sf::Mouse::Button button) {
-    return sf::Mouse::isButtonPressed(button);
+    return mouseState[button];
 }
 
+bool Input::isMouseButtonClicked(sf::Mouse::Button button) {
+    return !prevMouseState[button] && mouseState[button];
+}
+
+bool Input::isMouseButtonReleased(sf::Mouse::Button button) {
+    return prevMouseState[button] && !mouseState[button];
+}
 
 sf::Vector2i Input::getMousePosition() {
     if (window) {

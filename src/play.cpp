@@ -1,12 +1,12 @@
 #include "play.h"
 #include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
-#include <iostream>                         // for char_traits, basic_ostream
-#include <iterator>                         // for next
+#include <iostream>                         // for basic_ostream, char_traits
 #include "actor.h"                          // for Actor
 #include "collision.h"                      // for checkHitboxCollision
 #include "graphics.h"                       // for Graphics
+#include "player.h"                         // for Player
 #include "screens.h"                        // for ScreenType, Screens
-namespace sf { class RenderTarget; }
+namespace sf { class RenderTarget; }  // lines 10-10
 
 Play::Play(Graphics& _graphics, Screens& _screens, std::list<Actor*>& _actors)
     : graphics(_graphics), screens(_screens), actors(_actors) {}
@@ -19,11 +19,27 @@ void Play::run() {
         actor->update();
     }
 
+    // Find the player agent
+    Player* player = nullptr;
+    for (auto actor : actors) {
+        if (actor->isPlayer()) {
+            player = static_cast<Player*>(actor);
+            break;
+        }
+    }
+
+    if (player->getShot()) {
+        std::cout << "Shoot!" << std::endl;
+        player->shotHandled();
+    }
+
     for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-        for (auto it2 = std::next(it1); it2 != actors.end(); ++it2) {
-            if (checkHitboxCollision((*it1)->getTranslatedHitbox(), (*it2)->getTranslatedHitbox())) {
-                std::cout << "Collision detected!" << std::endl;
-            }
+        if ((*it1)->isPlayer()) {
+            continue;
+        }
+
+        if (checkHitboxCollision((*it1)->getTranslatedHitbox(), player->getTranslatedHitbox())) {
+            std::cout << "Collision detected!" << std::endl;
         }
     }
 

@@ -26,6 +26,7 @@ public:
     virtual void update() = 0;
     virtual void draw(sf::RenderTarget& target) = 0;
     virtual sf::FloatRect getTranslatedHitbox() const = 0;
+    bool isPlayer() const { return type == AgentType::PLAYER; }
 
 protected:
     double x;

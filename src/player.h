@@ -15,6 +15,8 @@ public:
     void update() override;
     void draw(sf::RenderTarget& target) override;
     sf::FloatRect getTranslatedHitbox() const override;
+    bool getShot();
+    void shotHandled();
 
 private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;
@@ -22,6 +24,8 @@ private:
     static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
     static constexpr double LOWER_BOUND = SCREEN_HEIGHT + (UNIT_SIZE / 2);
     static constexpr double speed = 250;
+    bool shot;
+    bool canShoot;
     Input& input;
     Animator& animator;
     sf::FloatRect hitbox;

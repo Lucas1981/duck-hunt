@@ -14,6 +14,8 @@ public:
     bool isKeyPressed(sf::Keyboard::Key key);
     bool isKeyReleased(sf::Keyboard::Key key);
     bool isMouseButtonPressed(sf::Mouse::Button button);
+    bool isMouseButtonClicked(sf::Mouse::Button button);
+    bool isMouseButtonReleased(sf::Mouse::Button button);
     sf::Vector2i getMousePosition();  // Add this method
 
     void setWindow(sf::RenderWindow& win);
@@ -22,6 +24,8 @@ private:
     sf::RenderWindow* window;
     std::unordered_map<sf::Keyboard::Key, bool> keyState;
     std::unordered_map<sf::Keyboard::Key, bool> prevKeyState;
+    bool prevMouseState[sf::Mouse::ButtonCount] = {false};
+    bool mouseState[sf::Mouse::ButtonCount] = {false};
 };
 
 #endif // INPUT_H
