@@ -21,9 +21,11 @@ private:
     void handleReadyState();
     void handleRunningState();
     void handleHitState();
+    void handleMissState();
+    void handleResetState();
     bool initialize();
     void cleanup();
-    void reset();
+    void resetActors();
 
     GameState* gameState;
     Input input;

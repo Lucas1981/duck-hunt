@@ -15,6 +15,7 @@ enum class AgentType {
 enum class AgentState {
     IDLE,
     FLYING,
+    ESCAPED,
     SHOT,
     FALLING,
     DEAD
@@ -27,6 +28,7 @@ public:
     virtual void draw(sf::RenderTarget& target) = 0;
     virtual sf::FloatRect getTranslatedHitbox() const = 0;
     bool isPlayer() const { return type == AgentType::PLAYER; }
+    double getY() { return y; }
 
 protected:
     double x;

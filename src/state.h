@@ -5,10 +5,11 @@
 
 enum class GameStateType {
     TITLE_SCREEN,
+    RESET,
     READY,
     RUNNING,
     HIT,
-    // MISS
+    MISS
 };
 
 class GameState {
@@ -17,8 +18,13 @@ public:
     GameStateType getState() const;
     void setState(GameStateType newState);
     double getTimeSinceLastStateChange();
+    void reload();
+    void decreaseBullets();
+    int getBullets();
 
 private:
+    static constexpr int NUMBER_OF_ALLOWED_BULLETS = 3;
+    int bullets;
     ClockType::time_point lastStateChange;
     GameStateType state;
     Clock& clock;

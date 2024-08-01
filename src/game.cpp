@@ -27,11 +27,12 @@ void Game::run() {
             graphics.closeWindow();
         }
 
-        // graphics.clearWindow();
-
         switch (gameState->getState()) {
             case GameStateType::TITLE_SCREEN:
                 // handleTitleScreenState();
+                break;
+            case GameStateType::RESET:
+                handleResetState();
                 break;
             case GameStateType::READY:
                 handleReadyState();
@@ -41,6 +42,9 @@ void Game::run() {
                 break;
             case GameStateType::HIT:
                 handleHitState();
+                break;
+            case GameStateType::MISS:
+                handleMissState();
                 break;
             default:
                 std::cerr << "Unknown game state!" << std::endl;
@@ -62,9 +66,12 @@ void Game::handleRunningState() {
 
 void Game::handleHitState() {
     if (gameState->getTimeSinceLastStateChange() > 1) {
-        reset();
-        gameState->setState(GameStateType::RUNNING);
+        gameState->setState(GameStateType::RESET);
     }
+    play->run(false);
+}
+
+void Game::handleMissState() {
     play->run(false);
 }
 
@@ -72,12 +79,18 @@ bool Game::initialize() {
     std::cout << "Initializing...\n";
     gameState = new GameState(clock);
     input.setWindow(graphics.getWindow());
-    reset();
+    resetActors();
     play = new Play(graphics, screens, actors, gameState);
     return true;
 }
 
-void Game::reset() {
+void Game::handleResetState() {
+    resetActors();
+    gameState->reload();
+    gameState->setState(GameStateType::RUNNING);
+}
+
+void Game::resetActors() {
     actors.clear();
     actors.push_back(new Duck(animator, clock));
     actors.push_back(new Player(input, animator));

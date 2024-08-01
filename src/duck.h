@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <SFML/Graphics/Rect.hpp>  // for FloatRect
 #include "animations.h"
+#include <random>   // for mt19937, uniform_int_distribution
 class Animator;
 namespace sf { class RenderTarget; }
 
@@ -21,20 +22,31 @@ public:
     sf::FloatRect getTranslatedHitbox() const override;
     Animations::AnimationIndex animationKey;
     void handleShot();
+    void handleEscaped();
 
 private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;
     static constexpr double RIGHT_BOUND = SCREEN_WIDTH + (UNIT_SIZE / 2);
     static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
-    static constexpr double LOWER_BOUND = SCREEN_HEIGHT + (UNIT_SIZE / 2);
-    static constexpr double speed = 250;
+    static constexpr double LOWER_BOUND = SCREEN_HEIGHT * 0.8;
+    static constexpr double timeToDirectionChange = 500;
+    static constexpr double speed = 300;
 
     ClockType::time_point startTime;
+    ClockType::time_point lastDirectionChange;
     Clock& clock;
     Animator& animator;
+    int directionX;
+    int directionY;
+    static std::mt19937 gen; // Random number generator
+    static std::uniform_int_distribution<> directionDistribution; // Distribution for x coordinate
+    static std::uniform_int_distribution<> startXDistribution; // Distribution for x coordinate
+    int getRandomDirection();
+    int getRandomStartX();
 
     std::unordered_map<Animations::AnimationIndex, sf::FloatRect> hitboxes;
     void initializeHitboxes();
+    void handleDirectionChange();
 };
 
 #endif // DUCK_H

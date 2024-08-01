@@ -18,6 +18,9 @@ public:
     void run(bool handleInput);
 
 private:
+    void update();
+    void inputHandler();
+    void draw();
     Graphics& graphics;
     Screens& screens;
     GameState* gameState;
