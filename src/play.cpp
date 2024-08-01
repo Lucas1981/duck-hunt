@@ -1,5 +1,6 @@
 #include "play.h"
 #include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
+#include <SFML/Graphics/Rect.hpp>  // for hitbox
 #include <iostream>                         // for basic_ostream, char_traits
 #include "actor.h"                          // for Actor
 #include "collision.h"                      // for checkHitboxCollision
@@ -29,18 +30,18 @@ void Play::run() {
     }
 
     if (player->getShot()) {
-        std::cout << "Shoot!" << std::endl;
+        std::cout << "Shot fired!" << std::endl;
+        sf::FloatRect playerHitbox = player->getTranslatedHitbox();
+        for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
+            if ((*it1)->isPlayer()) {
+                continue;
+            }
+
+            if (checkHitboxCollision((*it1)->getTranslatedHitbox(), playerHitbox)) {
+                std::cout << "Target shot!" << std::endl;
+            }
+        }
         player->shotHandled();
-    }
-
-    for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-        if ((*it1)->isPlayer()) {
-            continue;
-        }
-
-        if (checkHitboxCollision((*it1)->getTranslatedHitbox(), player->getTranslatedHitbox())) {
-            std::cout << "Collision detected!" << std::endl;
-        }
     }
 
     for (auto actor : actors) {
