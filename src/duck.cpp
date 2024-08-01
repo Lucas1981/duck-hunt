@@ -68,8 +68,9 @@ void Duck::update() {
         x = RIGHT_BOUND;
         directionX *= -1;
     }
-    if (state != AgentState::ESCAPED && y < UPPER_BOUND) {
-        y = UPPER_BOUND;
+    double stateBasedUpperBound = state == AgentState::ESCAPED ? 0 : UPPER_BOUND;
+    if (y < stateBasedUpperBound) {
+        y = stateBasedUpperBound;
         directionY *= -1;
     }
     if (y > LOWER_BOUND) {

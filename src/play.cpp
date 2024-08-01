@@ -26,7 +26,7 @@ void Play::run(bool handleInput) {
 void Play::update() {
     for (auto actor : actors) {
         actor->update();
-        if (!actor->isPlayer() && actor->getY() <= 0) {
+        if (!actor->isPlayer() && actor->getY() == 0) {
             gameState->setState(GameStateType::RESET);
         }
     }
