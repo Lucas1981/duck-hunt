@@ -7,9 +7,9 @@
 #include "graphics.h"  // for Graphics
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
-#include "state.h"     // for GameState
-class Actor;  // lines 12-12
-class Play;
+class Actor;  // lines 11-11
+class GameState;
+class Play;  // lines 12-12
 
 class Game {
 public:
@@ -20,10 +20,12 @@ public:
 private:
     void handleReadyState();
     void handleRunningState();
+    void handleHitState();
     bool initialize();
     void cleanup();
+    void reset();
 
-    GameState gameState;
+    GameState* gameState;
     Input input;
     Graphics graphics;
     Clock clock;

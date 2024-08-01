@@ -7,9 +7,10 @@
 Frames::Frames() {
     // Default constructor
     loadTexture("../assets/spritesheet.png");
-    addFrame(0, 0, 128, 128);
-    addFrame(128, 0, 128, 128);
-    addFrame(256, 0, 128, 128);
+    addFrame(0, 0, 128, 128); // target
+    addFrame(128, 0, 128, 128); // flying right frame 1
+    addFrame(256, 0, 128, 128); // flying right frame 2
+    addFrame(384, 0, 128, 128); // shot
 }
 
 void Frames::loadTexture(const std::string& filePath) {

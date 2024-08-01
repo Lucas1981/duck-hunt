@@ -2,18 +2,25 @@
 #define PLAY_H
 
 #include <list>  // for list
-class Actor;  // lines 11-11
-class Graphics;
-class Screens;
+class Actor;  // lines 6-6
+class GameState;
+class Graphics;  // lines 7-7
+class Screens;  // lines 8-8
 
 class Play {
 public:
-    Play(Graphics& graphics, Screens& screens, std::list<Actor*>& actors);
-    void run();
+    Play(
+        Graphics& graphics,
+        Screens& screens,
+        std::list<Actor*>& actors,
+        GameState* gameState
+    );
+    void run(bool handleInput);
 
 private:
     Graphics& graphics;
     Screens& screens;
+    GameState* gameState;
     std::list<Actor*>& actors;
 };
 

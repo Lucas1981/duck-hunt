@@ -5,8 +5,9 @@
 #include "duck.h"                    // for Duck
 #include "play.h"                    // for Play
 #include "player.h"                  // for Player
+#include "state.h"                   // for GameState, GameStateType
 
-Game::Game() : play(nullptr) {}
+Game::Game() : gameState(nullptr), play(nullptr) {}
 
 Game::~Game() {
     cleanup();
@@ -28,7 +29,7 @@ void Game::run() {
 
         // graphics.clearWindow();
 
-        switch (gameState.getState()) {
+        switch (gameState->getState()) {
             case GameStateType::TITLE_SCREEN:
                 // handleTitleScreenState();
                 break;
@@ -37,6 +38,9 @@ void Game::run() {
                 break;
             case GameStateType::RUNNING:
                 handleRunningState();
+                break;
+            case GameStateType::HIT:
+                handleHitState();
                 break;
             default:
                 std::cerr << "Unknown game state!" << std::endl;
@@ -53,16 +57,30 @@ void Game::handleReadyState() {
 }
 
 void Game::handleRunningState() {
-    play->run();
+    play->run(true);
+}
+
+void Game::handleHitState() {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        reset();
+        gameState->setState(GameStateType::RUNNING);
+    }
+    play->run(false);
 }
 
 bool Game::initialize() {
     std::cout << "Initializing...\n";
+    gameState = new GameState(clock);
     input.setWindow(graphics.getWindow());
+    reset();
+    play = new Play(graphics, screens, actors, gameState);
+    return true;
+}
+
+void Game::reset() {
+    actors.clear();
     actors.push_back(new Duck(animator, clock));
     actors.push_back(new Player(input, animator));
-    play = new Play(graphics, screens, actors);
-    return true;
 }
 
 void Game::cleanup() {
@@ -71,5 +89,6 @@ void Game::cleanup() {
         delete actor;
     }
     actors.clear();
+    delete gameState;
     std::cout << "Goodbye!\n";
 }

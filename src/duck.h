@@ -20,6 +20,7 @@ public:
     void draw(sf::RenderTarget& target) override;
     sf::FloatRect getTranslatedHitbox() const override;
     Animations::AnimationIndex animationKey;
+    void handleShot();
 
 private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;

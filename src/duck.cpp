@@ -44,6 +44,10 @@ void Duck::draw(sf::RenderTarget& target) {
     );
 }
 
+void Duck::handleShot() {
+    animationKey = Animations::SHOT;
+}
+
 sf::FloatRect Duck::getTranslatedHitbox() const {
     sf::FloatRect currentHitbox = hitboxes.at(animationKey);
     currentHitbox.left += static_cast<float>(x);
