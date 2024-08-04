@@ -67,6 +67,7 @@ void Play::inputHandler() {
 
             if (checkHitboxCollision((*it1)->getTranslatedHitbox(), playerHitbox)) {
                 (static_cast<Duck*>(*it1))->handleShot();
+                gameState->decreaseDucks();
                 gameState->increaseDucksShot();
                 gameState->setState(GameStateType::HIT);
             } else if (gameState->getBullets() == 0) {
