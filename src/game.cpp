@@ -1,11 +1,14 @@
 #include "game.h"
-#include <SFML/Window/Keyboard.hpp>  // for Keyboard
-#include <iostream>                  // for basic_ostream, char_traits, oper...
-#include "actor.h"                   // for Actor
-#include "duck.h"                    // for Duck
-#include "play.h"                    // for Play
-#include "player.h"                  // for Player
-#include "state.h"                   // for GameState, GameStateType
+#include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
+#include <SFML/Window/Keyboard.hpp>         // for Keyboard
+#include <iostream>                         // for basic_ostream, operator<<
+#include <string>                           // for basic_string
+#include "actor.h"                          // for Actor
+#include "constants.h"                      // for SCREEN_WIDTH, UNIT_SIZE
+#include "duck.h"                           // for Duck
+#include "play.h"                           // for Play
+#include "player.h"                         // for Player
+#include "state.h"                          // for GameState, GameStateType
 
 Game::Game() : gameState(nullptr), play(nullptr) {}
 
@@ -23,13 +26,13 @@ void Game::run() {
         clock.setTimer();
         input.update();
 
-        if (input.isKeyPressed(sf::Keyboard::Escape)) {
+        if (input.isKeyPressed(sf::Keyboard::Escape) || input.isWindowClosed()) {
             graphics.closeWindow();
         }
 
         switch (gameState->getState()) {
             case GameStateType::TITLE_SCREEN:
-                // handleTitleScreenState();
+                handleTitleScreenState();
                 break;
             case GameStateType::RESET:
                 handleResetState();
@@ -52,12 +55,24 @@ void Game::run() {
         }
 
         // Add rendering logic here
+        graphics.displayCanvas();
         graphics.displayWindow();
     }
 }
 
+void Game::handleTitleScreenState() {
+    if (input.isKeyPressed(sf::Keyboard::Enter)) {
+        gameState->setState(GameStateType::RESET);
+    }
+    screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
+}
+
 void Game::handleReadyState() {
-    // Implementation for the READY state
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        actors.push_back(new Duck(animator, clock));
+        gameState->setState(GameStateType::RUNNING);
+    }
+    play->run(false);
 }
 
 void Game::handleRunningState() {
@@ -73,6 +88,13 @@ void Game::handleHitState() {
 
 void Game::handleMissState() {
     play->run(false);
+    text.drawText(
+        graphics.getCanvas(),
+        "Fly away!",
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        300,
+        TextAlignment::CENTER
+    );
 }
 
 bool Game::initialize() {
@@ -81,18 +103,25 @@ bool Game::initialize() {
     input.setWindow(graphics.getWindow());
     resetActors();
     play = new Play(graphics, screens, actors, gameState);
+
     return true;
 }
 
 void Game::handleResetState() {
+    gameState->startTimeToShoot();
+
+    if (gameState->getDucksLeft() == 0) {
+        std::cout << "No ducks left\n";
+        std::cout << "You shot " << gameState->getDucksShot() << " ducks!\n";
+    }
+
     resetActors();
-    gameState->reload();
-    gameState->setState(GameStateType::RUNNING);
+    gameState->reloadBullets();
+    gameState->setState(GameStateType::READY);
 }
 
 void Game::resetActors() {
     actors.clear();
-    actors.push_back(new Duck(animator, clock));
     actors.push_back(new Player(input, animator));
 }
 

@@ -13,21 +13,36 @@ namespace sf { class RenderTarget; }  // lines 11-11
 Play::Play(Graphics& _graphics, Screens& _screens, std::list<Actor*>& _actors, GameState* _gameState)
     : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors) {}
 
-void Play::run(bool handleInput) {    
-    update();
+void Play::run(bool handleInput) {
+    bool isStateChanged = false;
+    if (
+        gameState->getState() == GameStateType::RUNNING &&
+        gameState->timeToShootExpired()
+    ) {
+        gameState->setState(GameStateType::MISS);
+        isStateChanged = true;
+    }
+
+    update(isStateChanged);
     if (handleInput) {
         inputHandler();
     }
     draw();
-    
-    graphics.displayCanvas();
 }
 
-void Play::update() {
+void Play::update(bool isStateChanged) {
     for (auto actor : actors) {
         actor->update();
-        if (!actor->isPlayer() && actor->getY() == 0) {
-            gameState->setState(GameStateType::RESET);
+
+        if (!actor->isPlayer()) {
+            if (actor->getY() == 0) {
+                gameState->decreaseDucks();
+                gameState->setState(GameStateType::RESET);
+            }
+
+            if (isStateChanged) {
+                static_cast<Duck*>(actor)->handleEscaped();
+            }
         }
     }
 }
@@ -46,13 +61,13 @@ void Play::inputHandler() {
         sf::FloatRect playerHitbox = player->getTranslatedHitbox();
 
         for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-
             if ((*it1)->isPlayer()) {
                 continue;
             }
 
             if (checkHitboxCollision((*it1)->getTranslatedHitbox(), playerHitbox)) {
                 (static_cast<Duck*>(*it1))->handleShot();
+                gameState->increaseDucksShot();
                 gameState->setState(GameStateType::HIT);
             } else if (gameState->getBullets() == 0) {
                 (static_cast<Duck*>(*it1))->handleEscaped();

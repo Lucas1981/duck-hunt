@@ -1,9 +1,12 @@
 #include "state.h"
 #include <chrono>  // for duration, operator-, time_point
 
-GameState::GameState(Clock& _clock) : state(GameStateType::RUNNING), clock(_clock)  {
+GameState::GameState(Clock& _clock) : state(GameStateType::TITLE_SCREEN), clock(_clock)  {
     lastStateChange = clock.getCurrentTime();
+    round = 0;
     bullets = NUMBER_OF_ALLOWED_BULLETS;
+    ducksLeft = DUCKS_PER_ROUND;
+    ducksShot = 0;
 }
 
 GameStateType GameState::getState() const {
@@ -20,14 +23,52 @@ double GameState::getTimeSinceLastStateChange() {
     return std::chrono::duration<double>(now - lastStateChange).count();
 }
 
-void GameState::reload() {
+void GameState::reloadBullets() {
     bullets = NUMBER_OF_ALLOWED_BULLETS;
+}
+
+void GameState::resetDucksForRound() {
+    ducksLeft = DUCKS_PER_ROUND;
+    ducksShot = 0;
 }
 
 void GameState::decreaseBullets() {
     bullets--;
 }
 
+void GameState::decreaseDucks() {
+    ducksLeft--;
+}
+
+void GameState::increaseDucksShot() {
+    ducksShot++;
+}
+
+void GameState::increaseRound() {
+    round++;
+}
+
 int GameState::getBullets() {
     return bullets;
+}
+
+int GameState::getDucksLeft() {
+    return ducksLeft;
+}
+
+int GameState::getDucksShot() {
+    return ducksShot;
+}
+
+bool GameState::isTargetMet() {
+    return ducksShot >= target;
+}
+
+void GameState::startTimeToShoot() {
+    timeToShoot = clock.getCurrentTime();
+}
+
+bool GameState::timeToShootExpired() {
+    ClockType::time_point now = clock.getCurrentTime();
+    return std::chrono::duration<double>(now - timeToShoot).count() >= ALLOWED_SHOOTING_TIME;
 }

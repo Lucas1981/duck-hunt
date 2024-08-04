@@ -7,6 +7,7 @@
 #include "graphics.h"  // for Graphics
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
+#include "text.h"
 class Actor;  // lines 11-11
 class GameState;
 class Play;  // lines 12-12
@@ -18,6 +19,7 @@ public:
     void run();
 
 private:
+    void handleTitleScreenState();
     void handleReadyState();
     void handleRunningState();
     void handleHitState();
@@ -35,6 +37,7 @@ private:
     Animator animator;
     std::list<Actor*> actors;  // Use a list to store agents
     Play* play;
+    Text text;
 };
 
 #endif // GAME_H

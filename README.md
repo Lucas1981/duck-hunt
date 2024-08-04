@@ -8,21 +8,28 @@ Todo:
     - [x] Title screen
     - [x] Background
 - [x] Add double-buffer layer
-- [ ] Add listener on red window button
-- [ ] Add ducks
-- [ ] Refactor game loop out to play module
-- [ ] Add shot white-overlay
-- [ ] Add collision
+- [x] Add ducks
+- [x] Refactor game loop out to play module
+- [x] Add collision
+- [x] Add text module
 - [ ] Refine gameplay lifecycle:
-    - [ ] Ready state
-    - [ ] Running state
-    - [ ] Shot state
-    - [ ] Fly away state
-    - [ ] End of turn state
+    - [x] Title screen state
+    - [ ] ?Begin round state?
+    - [x] Reset state
+    - [x] Ready state
+    - [x] Running state
+    - [x] Shot state
+    - [x] Fly away state
+    - [ ] ?Flew away state?
+    - [ ] End of round state (tally?)
     - [ ] Congratulations state
     - [ ] Game over state
     - [ ] Game beat state
+- [ ] Manage round configuration (with rounds module maybe)
+- [ ] Add listener on red window button
+- [ ] Add shot white-overlay
+- [ ] Add states and state animations for player
 - [ ] Add UI
-- [ ] Add sound
-
+- [ ] Add sounds
+- [ ] Substitute assets 
 

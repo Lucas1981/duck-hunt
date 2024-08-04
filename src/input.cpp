@@ -23,6 +23,8 @@ void Input::update() {
             keyState[event.key.code] = true;
         } else if (event.type == sf::Event::KeyReleased) {
             keyState[event.key.code] = false;
+        } else if (event.type == sf::Event::Closed) {
+            windowClosed = true;
         }
     }
 }
@@ -56,4 +58,8 @@ sf::Vector2i Input::getMousePosition() {
 
 void Input::setWindow(sf::RenderWindow& win) {
     window = &win;
+}
+
+bool Input::isWindowClosed() const {
+    return windowClosed;
 }

@@ -17,6 +17,7 @@ public:
     bool isMouseButtonClicked(sf::Mouse::Button button);
     bool isMouseButtonReleased(sf::Mouse::Button button);
     sf::Vector2i getMousePosition();  // Add this method
+    bool isWindowClosed() const;
 
     void setWindow(sf::RenderWindow& win);
 
@@ -26,6 +27,7 @@ private:
     std::unordered_map<sf::Keyboard::Key, bool> prevKeyState;
     bool prevMouseState[sf::Mouse::ButtonCount] = {false};
     bool mouseState[sf::Mouse::ButtonCount] = {false};
+    bool windowClosed = false;
 };
 
 #endif // INPUT_H
