@@ -12,6 +12,7 @@ Todo:
 - [x] Refactor game loop out to play module
 - [x] Add collision
 - [x] Add text module
+- [x] Add listener on red window button
 - [ ] Refine gameplay lifecycle:
     - [x] Title screen state
     - [ ] ?Begin round state?
@@ -25,11 +26,11 @@ Todo:
     - [ ] Congratulations state
     - [ ] Game over state
     - [ ] Game beat state
+- [ ] Finalize shot animations
 - [ ] Manage round configuration (with rounds module maybe)
-- [ ] Add listener on red window button
 - [ ] Add shot white-overlay
-- [ ] Add states and state animations for player
+- [ ] Add states and state animations for player (disabled crosshairs)
 - [ ] Add UI
 - [ ] Add sounds
-- [ ] Substitute assets 
+- [ ] Substitute assets and expand animations
 

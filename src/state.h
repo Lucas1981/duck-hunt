@@ -28,12 +28,14 @@ public:
     int getBullets();
     int getDucksLeft();
     int getDucksShot();
+    int getDucksPerRound();
+    int getTarget();
     bool isTargetMet();
     bool timeToShootExpired();
 
 private:
     static constexpr int NUMBER_OF_ALLOWED_BULLETS = 3;
-    static constexpr int DUCKS_PER_ROUND = 4;
+    static constexpr int DUCKS_PER_ROUND = 10;
     static constexpr int TOTAL_ROUNDS = 4;
     static constexpr int ALLOWED_SHOOTING_TIME = 8;
     int round;

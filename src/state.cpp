@@ -64,6 +64,14 @@ bool GameState::isTargetMet() {
     return ducksShot >= target;
 }
 
+int GameState::getDucksPerRound() {
+    return DUCKS_PER_ROUND;
+}
+
+int GameState::getTarget() {
+    return target;
+}
+
 void GameState::startTimeToShoot() {
     timeToShoot = clock.getCurrentTime();
 }
