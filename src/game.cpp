@@ -84,7 +84,7 @@ void Game::handleTitleScreenState() {
 }
 
 void Game::handleReadyState() {
-    if (gameState->getTimeSinceLastStateChange() > 2) {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
         gameState->startTimeToShoot();
         actors.push_front(new Duck(animator, clock));
         gameState->setState(GameStateType::RUNNING);
@@ -99,13 +99,7 @@ void Game::handleRoundBeginState() {
     play->run(false);
     std::stringstream roundString;
     roundString << "Round " << gameState->getRound() + 1;
-    text.drawText(
-        graphics.getCanvas(),
-        roundString.str(),
-        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        VERTICAL_ANCHOR,
-        TextAlignment::CENTER
-    );
+    drawText(roundString.str());
 }
 
 void Game::handleRunningState() {
@@ -118,13 +112,7 @@ void Game::handleHitState() {
 
 void Game::handleMissState() {
     play->run(false);
-    text.drawText(
-        graphics.getCanvas(),
-        "Fly away!",
-        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        VERTICAL_ANCHOR,
-        TextAlignment::CENTER
-    );
+    drawText("Fly away!");
 }
 
 // After the duck has flown away, we want to still sustain this state for another second.
@@ -136,19 +124,13 @@ void Game::handleFlownState() {
 }
 
 void Game::handleRoundWonState() {
-    if (gameState->getTimeSinceLastStateChange() > 1) {
+    if (gameState->getTimeSinceLastStateChange() > 2) {
         gameState->increaseRound();
         gameState->resetDucksForRound();
         gameState->setState(GameStateType::ROUND_BEGIN);
     }
     play->run(false);
-    text.drawText(
-        graphics.getCanvas(),
-        "You beat the round!",
-        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        VERTICAL_ANCHOR,
-        TextAlignment::CENTER
-    );
+    drawText("You beat the round!");
 }
 
 void Game::handleGameOverState() {
@@ -156,13 +138,7 @@ void Game::handleGameOverState() {
         gameState->setState(GameStateType::TITLE_SCREEN);
     }
     play->run(false);
-    text.drawText(
-        graphics.getCanvas(),
-        "Game over!",
-        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        VERTICAL_ANCHOR,
-        TextAlignment::CENTER
-    );
+    drawText("Game over!");
 }
 
 void Game::handleFinishedState() {
@@ -170,13 +146,7 @@ void Game::handleFinishedState() {
         gameState->setState(GameStateType::TITLE_SCREEN);
     }
     play->run(false);
-    text.drawText(
-        graphics.getCanvas(),
-        "Congratulations! You beat the game!",
-        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        VERTICAL_ANCHOR,
-        TextAlignment::CENTER
-    );
+    drawText("Congratulations! You beat the game!");
 }
 
 bool Game::initialize() {
@@ -206,6 +176,16 @@ void Game::handleResetState() {
     } else {
         gameState->setState(GameStateType::READY);
     }
+}
+
+void Game::drawText(const std::string& str) {
+    text.drawText(
+        graphics.getCanvas(),
+        str,
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        VERTICAL_ANCHOR,
+        TextAlignment::CENTER
+    );
 }
 
 void Game::resetActors() {

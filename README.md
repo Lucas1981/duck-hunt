@@ -22,15 +22,16 @@ Todo:
     - [x] Shot state
     - [x] Fly away state
     - [x] Flew away state
-    - [x] Congratulations state
+    - [x] Round beat state
     - [x] Game over state
     - [x] Game beat state
-- [ ] Add UI
-- [ ] Finalize shot animations
+- [x] Finalize shot animations
 - [ ] Manage round configuration (with rounds module maybe)
-- [ ] Add shot white-overlay
+- [ ] Add UI
 - [ ] Add states and state animations for player (disabled crosshairs)
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
 - [ ] Expand logic for duck when coming up
+- [ ] Refactor out handlers
+- [ ] ?Add shot white-overlay?
 

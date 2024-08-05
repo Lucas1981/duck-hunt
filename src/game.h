@@ -2,15 +2,16 @@
 #define GAME_H
 
 #include <list>        // for list
+#include <string>      // for string
 #include "animator.h"  // for Animator
 #include "clock.h"     // for Clock
 #include "graphics.h"  // for Graphics
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
-#include "text.h"
+#include "text.h"      // for Text
 class Actor;  // lines 11-11
-class GameState;
-class Play;  // lines 12-12
+class GameState;  // lines 12-12
+class Play;  // lines 13-13
 
 class Game {
 public:
@@ -33,6 +34,7 @@ private:
     bool initialize();
     void cleanup();
     void resetActors();
+    void drawText(const std::string& str);
 
     static constexpr int VERTICAL_ANCHOR = 300;
     GameState* gameState;
