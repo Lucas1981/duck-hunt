@@ -104,7 +104,7 @@ void Game::handleRoundBeginState() {
         graphics.getCanvas(),
         roundString.str(),
         (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        300,
+        VERTICAL_ANCHOR,
         TextAlignment::CENTER
     );
 }
@@ -114,9 +114,6 @@ void Game::handleRunningState() {
 }
 
 void Game::handleHitState() {
-    if (gameState->getTimeSinceLastStateChange() > 1) {
-        gameState->setState(GameStateType::RESET);
-    }
     play->run(false);
 }
 
@@ -126,7 +123,7 @@ void Game::handleMissState() {
         graphics.getCanvas(),
         "Fly away!",
         (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        300,
+        VERTICAL_ANCHOR,
         TextAlignment::CENTER
     );
 }
@@ -150,7 +147,7 @@ void Game::handleRoundWonState() {
         graphics.getCanvas(),
         "You beat the round!",
         (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        300,
+        VERTICAL_ANCHOR,
         TextAlignment::CENTER
     );
 }
@@ -164,7 +161,7 @@ void Game::handleGameOverState() {
         graphics.getCanvas(),
         "Game over!",
         (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        300,
+        VERTICAL_ANCHOR,
         TextAlignment::CENTER
     );
 }
@@ -178,7 +175,7 @@ void Game::handleFinishedState() {
         graphics.getCanvas(),
         "Congratulations! You beat the game!",
         (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
-        300,
+        VERTICAL_ANCHOR,
         TextAlignment::CENTER
     );
 }

@@ -24,18 +24,24 @@ public:
     void handleShot();
     void handleEscaping();
     void handleEscaped();
+    void handleFalling();
     bool isEscaped();
+    bool isFalling();
+    bool isUppeThresholdReached();
+    bool isLowerThresholdReached();
 
 private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;
     static constexpr double RIGHT_BOUND = SCREEN_WIDTH + (UNIT_SIZE / 2);
     static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
     static constexpr double LOWER_BOUND = SCREEN_HEIGHT * 0.8;
-    static constexpr double timeToDirectionChange = 500;
+    static constexpr double TIME_TO_DIRECTION_CHANGE = 500;
+    static constexpr double TIME_TO_FALL = 500;
     static constexpr double speed = 300;
 
     ClockType::time_point startTime;
     ClockType::time_point lastDirectionChange;
+    ClockType::time_point timeShot;
     Clock& clock;
     Animator& animator;
     int directionX;

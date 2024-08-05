@@ -7,10 +7,12 @@
 Frames::Frames() {
     // Default constructor
     loadTexture("../assets/spritesheet.png");
-    addFrame(0, 0, 128, 128); // target
-    addFrame(128, 0, 128, 128); // flying right frame 1
-    addFrame(256, 0, 128, 128); // flying right frame 2
-    addFrame(384, 0, 128, 128); // shot
+    addFrame(0, 0, 128, 128); // 0 target
+    addFrame(128, 0, 128, 128); // 1 flying right frame 1
+    addFrame(256, 0, 128, 128); // 2 flying right frame 2
+    addFrame(384, 0, 128, 128); // 3 shot
+    addFrame(0, 128, 128, 128); // 4 Falling, LTR
+    addFrame(128, 128, 128, 128); // 5 Falling, RTL
 }
 
 void Frames::loadTexture(const std::string& filePath) {

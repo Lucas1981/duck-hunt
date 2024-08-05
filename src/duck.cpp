@@ -50,10 +50,19 @@ void Duck::update() {
     }
 
     if (
+        state == AgentState::SHOT &&
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            clock.getCurrentTime() - timeShot
+        ).count() > TIME_TO_FALL
+    ) {
+        handleFalling();
+    }
+
+    if (
         state == AgentState::FLYING &&
         std::chrono::duration_cast<std::chrono::milliseconds>(
             clock.getCurrentTime() - lastDirectionChange
-        ).count() > timeToDirectionChange
+        ).count() > TIME_TO_DIRECTION_CHANGE
     ) {
         lastDirectionChange = clock.getCurrentTime();
         handleDirectionChange();
@@ -104,10 +113,17 @@ void Duck::draw(sf::RenderTarget& target) {
 }
 
 void Duck::handleShot() {
+    timeShot = clock.getCurrentTime();
     state = AgentState::SHOT;
     directionX = 0;
     directionY = 0;
     animationKey = Animations::SHOT;
+}
+
+void Duck::handleFalling() {
+    state = AgentState::FALLING;
+    directionY = 1;
+    animationKey = Animations::FALLING;
 }
 
 void Duck::handleEscaping() {
@@ -129,4 +145,16 @@ sf::FloatRect Duck::getTranslatedHitbox() const {
 
 bool Duck::isEscaped() {
     return state == AgentState::ESCAPED;
+}
+
+bool Duck::isFalling() {
+    return state == AgentState::FALLING;
+}
+
+bool Duck::isUppeThresholdReached() {
+    return y  == 0;
+}
+
+bool Duck::isLowerThresholdReached() {
+    return y >= LOWER_BOUND;
 }

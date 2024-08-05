@@ -34,19 +34,30 @@ void Play::update(bool isStateChanged) {
     for (auto actor : actors) {
         actor->update();
 
-        if (!actor->isPlayer()) {
-            if (
-                !static_cast<Duck*>(actor)->isEscaped() &&
-                actor->getY() == 0
-            ) {
-                static_cast<Duck*>(actor)->handleEscaped();
-                gameState->decreaseDucks();
-                gameState->setState(GameStateType::FLOWN);
-            }
+        if (actor->isPlayer()) {
+            continue;
+        }
 
-            if (isStateChanged) {
-                static_cast<Duck*>(actor)->handleEscaping();
-            }
+        Duck* duck = static_cast<Duck*>(actor);
+
+        if (
+            !duck->isEscaped() &&
+            duck->isUppeThresholdReached()
+        ) {
+            duck->handleEscaped();
+            gameState->decreaseDucks();
+            gameState->setState(GameStateType::FLOWN);
+        }
+
+        if (
+            duck->isFalling() &&
+            duck->isLowerThresholdReached()
+        ) {
+            gameState->setState(GameStateType::RESET);
+        }
+
+        if (isStateChanged) {
+            duck->handleEscaping();
         }
     }
 }

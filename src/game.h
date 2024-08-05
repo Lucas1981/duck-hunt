@@ -34,6 +34,7 @@ private:
     void cleanup();
     void resetActors();
 
+    static constexpr int VERTICAL_ANCHOR = 300;
     GameState* gameState;
     Input input;
     Graphics graphics;
