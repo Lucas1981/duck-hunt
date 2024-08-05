@@ -18,7 +18,7 @@ public:
     void run(bool handleInput);
 
 private:
-    void update(bool isStateChanged);
+    void update();
     void inputHandler();
     void draw();
     Graphics& graphics;

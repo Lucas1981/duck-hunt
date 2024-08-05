@@ -26,6 +26,7 @@ Todo:
     - [x] Game over state
     - [x] Game beat state
 - [x] Finalize shot animations
+- [x] Make sure falling speed is independent of moving speed
 - [ ] Manage round configuration (with rounds module maybe)
 - [ ] Add UI
 - [ ] Add states and state animations for player (disabled crosshairs)

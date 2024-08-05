@@ -69,9 +69,9 @@ void Duck::update() {
     }
 
     double elapsedTime = clock.getElapsedTime();
-
-    x += SPEED * elapsedTime * directionX;
-    y += SPEED * elapsedTime * directionY;
+    double speed = state == AgentState::FALLING ? FALLING_SPEED : MOVING_SPEED;
+    x += speed * elapsedTime * directionX;
+    y += speed * elapsedTime * directionY;
 
     if (x < LEFT_BOUND) {
         x = LEFT_BOUND;

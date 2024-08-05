@@ -14,6 +14,14 @@ Play::Play(Graphics& _graphics, Screens& _screens, std::list<Actor*>& _actors, G
     : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors) {}
 
 void Play::run(bool handleInput) {
+    update();
+    if (handleInput) {
+        inputHandler();
+    }
+    draw();
+}
+
+void Play::update() {
     bool isStateChanged = false;
     if (
         gameState->getState() == GameStateType::RUNNING &&
@@ -23,14 +31,6 @@ void Play::run(bool handleInput) {
         isStateChanged = true;
     }
 
-    update(isStateChanged);
-    if (handleInput) {
-        inputHandler();
-    }
-    draw();
-}
-
-void Play::update(bool isStateChanged) {
     for (auto actor : actors) {
         actor->update();
 
@@ -38,6 +38,7 @@ void Play::update(bool isStateChanged) {
             continue;
         }
 
+        // At this point we can safely typecast to a duck
         Duck* duck = static_cast<Duck*>(actor);
 
         if (
@@ -80,13 +81,15 @@ void Play::inputHandler() {
                 continue;
             }
 
-            if (checkHitboxCollision((*it1)->getTranslatedHitbox(), playerHitbox)) {
-                (static_cast<Duck*>(*it1))->handleShot();
+            Duck* duck = static_cast<Duck*>(*it1);
+
+            if (checkHitboxCollision(duck->getTranslatedHitbox(), playerHitbox)) {
+                duck->handleShot();
                 gameState->decreaseDucks();
                 gameState->increaseDucksShot();
                 gameState->setState(GameStateType::HIT);
             } else if (gameState->getBullets() == 0) {
-                (static_cast<Duck*>(*it1))->handleEscaping();
+                duck->handleEscaping();
                 gameState->setState(GameStateType::MISS);
             }
         }
