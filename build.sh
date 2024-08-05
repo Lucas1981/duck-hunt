@@ -6,7 +6,7 @@ mkdir build
 cd build
 
 # Run CMake and build the project
-cmake ..
+cmake .. # -DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 
 # Run the game

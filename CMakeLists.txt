@@ -24,8 +24,19 @@ set(WARN_FLAGS
     -Wswitch-enum
 )
 
-# Apply warning flags
-add_compile_options(${WARN_FLAGS})
+# Sanitizer flags
+set(SANITIZER_FLAGS
+    -fsanitize=address
+    -fno-omit-frame-pointer
+)
+
+# Apply warning flags and sanitizer flags for Debug builds
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_options(${WARN_FLAGS} ${SANITIZER_FLAGS})
+    add_link_options(${SANITIZER_FLAGS})
+else()
+    add_compile_options(${WARN_FLAGS})
+endif()
 
 # Enable IWYU
 set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "include-what-you-use;-Xiwyu;--mapping_file=../mappings.imp")
