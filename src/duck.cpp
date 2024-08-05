@@ -151,8 +151,8 @@ bool Duck::isFalling() {
     return state == AgentState::FALLING;
 }
 
-bool Duck::isUppeThresholdReached() {
-    return y  == 0;
+bool Duck::isUpperThresholdReached() {
+    return y == 0;
 }
 
 bool Duck::isLowerThresholdReached() {

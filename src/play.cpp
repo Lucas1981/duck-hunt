@@ -42,7 +42,7 @@ void Play::update(bool isStateChanged) {
 
         if (
             !duck->isEscaped() &&
-            duck->isUppeThresholdReached()
+            duck->isUpperThresholdReached()
         ) {
             duck->handleEscaped();
             gameState->decreaseDucks();

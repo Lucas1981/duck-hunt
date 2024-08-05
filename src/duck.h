@@ -27,7 +27,7 @@ public:
     void handleFalling();
     bool isEscaped();
     bool isFalling();
-    bool isUppeThresholdReached();
+    bool isUpperThresholdReached();
     bool isLowerThresholdReached();
 
 private:

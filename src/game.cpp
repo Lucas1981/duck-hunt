@@ -70,7 +70,6 @@ void Game::run() {
                 return;
         }
 
-        // Add rendering logic here
         graphics.displayCanvas();
         graphics.displayWindow();
     }
