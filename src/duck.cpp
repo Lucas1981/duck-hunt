@@ -70,8 +70,8 @@ void Duck::update() {
 
     double elapsedTime = clock.getElapsedTime();
 
-    x += speed * elapsedTime * directionX;
-    y += speed * elapsedTime * directionY;
+    x += SPEED * elapsedTime * directionX;
+    y += SPEED * elapsedTime * directionY;
 
     if (x < LEFT_BOUND) {
         x = LEFT_BOUND;

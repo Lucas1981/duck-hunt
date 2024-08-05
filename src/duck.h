@@ -37,7 +37,7 @@ private:
     static constexpr double LOWER_BOUND = SCREEN_HEIGHT * 0.8;
     static constexpr double TIME_TO_DIRECTION_CHANGE = 500;
     static constexpr double TIME_TO_FALL = 500;
-    static constexpr double speed = 300;
+    static constexpr double SPEED = 300;
 
     ClockType::time_point startTime;
     ClockType::time_point lastDirectionChange;
