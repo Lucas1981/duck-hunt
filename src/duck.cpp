@@ -45,6 +45,10 @@ int Duck::getRandomStartX() {
 }
 
 void Duck::update() {
+    if (state == AgentState::ESCAPED) {
+        return;
+    }
+
     if (
         state == AgentState::FLYING &&
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -68,7 +72,7 @@ void Duck::update() {
         x = RIGHT_BOUND;
         directionX *= -1;
     }
-    double stateBasedUpperBound = state == AgentState::ESCAPED ? 0 : UPPER_BOUND;
+    double stateBasedUpperBound = state == AgentState::ESCAPING ? 0 : UPPER_BOUND;
     if (y < stateBasedUpperBound) {
         y = stateBasedUpperBound;
         directionY *= -1;
@@ -106,9 +110,13 @@ void Duck::handleShot() {
     animationKey = Animations::SHOT;
 }
 
-void Duck::handleEscaped() {
+void Duck::handleEscaping() {
     directionX = 0;
     directionY = -1;
+    state = AgentState::ESCAPING;
+}
+
+void Duck::handleEscaped() {
     state = AgentState::ESCAPED;
 }
 
@@ -117,4 +125,8 @@ sf::FloatRect Duck::getTranslatedHitbox() const {
     currentHitbox.left += static_cast<float>(x);
     currentHitbox.top += static_cast<float>(y);
     return currentHitbox;
+}
+
+bool Duck::isEscaped() {
+    return state == AgentState::ESCAPED;
 }

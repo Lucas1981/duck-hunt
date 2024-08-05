@@ -2,9 +2,10 @@
 #include <SFML/Graphics/RenderTexture.hpp>  // for RenderTexture
 #include <SFML/Window/Keyboard.hpp>         // for Keyboard
 #include <iostream>                         // for basic_ostream, operator<<
-#include <string>                           // for basic_string
+#include <sstream>                          // for basic_stringstream, strin...
+#include <string>                           // for char_traits, allocator
 #include "actor.h"                          // for Actor
-#include "constants.h"                      // for SCREEN_WIDTH, UNIT_SIZE
+#include "constants.h"                      // for UNIT_SIZE, SCREEN_WIDTH
 #include "duck.h"                           // for Duck
 #include "play.h"                           // for Play
 #include "player.h"                         // for Player
@@ -34,6 +35,9 @@ void Game::run() {
             case GameStateType::TITLE_SCREEN:
                 handleTitleScreenState();
                 break;
+            case GameStateType::ROUND_BEGIN:
+                handleRoundBeginState();
+                break;
             case GameStateType::RESET:
                 handleResetState();
                 break;
@@ -49,6 +53,18 @@ void Game::run() {
             case GameStateType::MISS:
                 handleMissState();
                 break;
+            case GameStateType::FLOWN:
+                handleFlownState();
+                break;
+            case GameStateType::ROUND_WON:
+                handleRoundWonState();
+                break;
+            case GameStateType::GAME_OVER:
+                handleGameOverState();
+                break;
+            case GameStateType::FINISHED:
+                handleFinishedState();
+                break;
             default:
                 std::cerr << "Unknown game state!" << std::endl;
                 return;
@@ -62,17 +78,35 @@ void Game::run() {
 
 void Game::handleTitleScreenState() {
     if (input.isKeyPressed(sf::Keyboard::Enter)) {
-        gameState->setState(GameStateType::RESET);
+        gameState->resetGame();
+        gameState->setState(GameStateType::ROUND_BEGIN);
     }
     screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
 }
 
 void Game::handleReadyState() {
-    if (gameState->getTimeSinceLastStateChange() > 1) {
-        actors.push_back(new Duck(animator, clock));
+    if (gameState->getTimeSinceLastStateChange() > 2) {
+        gameState->startTimeToShoot();
+        actors.push_front(new Duck(animator, clock));
         gameState->setState(GameStateType::RUNNING);
     }
     play->run(false);
+}
+
+void Game::handleRoundBeginState() {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        gameState->setState(GameStateType::READY);
+    }
+    play->run(false);
+    std::stringstream roundString;
+    roundString << "Round " << gameState->getRound() + 1;
+    text.drawText(
+        graphics.getCanvas(),
+        roundString.str(),
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        300,
+        TextAlignment::CENTER
+    );
 }
 
 void Game::handleRunningState() {
@@ -97,6 +131,58 @@ void Game::handleMissState() {
     );
 }
 
+// After the duck has flown away, we want to still sustain this state for another second.
+void Game::handleFlownState() {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        gameState->setState(GameStateType::RESET);
+    }
+    handleMissState();
+}
+
+void Game::handleRoundWonState() {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        gameState->increaseRound();
+        gameState->resetDucksForRound();
+        gameState->setState(GameStateType::ROUND_BEGIN);
+    }
+    play->run(false);
+    text.drawText(
+        graphics.getCanvas(),
+        "You beat the round!",
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        300,
+        TextAlignment::CENTER
+    );
+}
+
+void Game::handleGameOverState() {
+    if (gameState->getTimeSinceLastStateChange() > 2) {
+        gameState->setState(GameStateType::TITLE_SCREEN);
+    }
+    play->run(false);
+    text.drawText(
+        graphics.getCanvas(),
+        "Game over!",
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        300,
+        TextAlignment::CENTER
+    );
+}
+
+void Game::handleFinishedState() {
+    if (gameState->getTimeSinceLastStateChange() > 3) {
+        gameState->setState(GameStateType::TITLE_SCREEN);
+    }
+    play->run(false);
+    text.drawText(
+        graphics.getCanvas(),
+        "Congratulations! You beat the game!",
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        300,
+        TextAlignment::CENTER
+    );
+}
+
 bool Game::initialize() {
     std::cout << "Initializing...\n";
     gameState = new GameState(clock);
@@ -108,16 +194,22 @@ bool Game::initialize() {
 }
 
 void Game::handleResetState() {
-    gameState->startTimeToShoot();
-
-    if (gameState->getDucksLeft() == 0) {
-        std::cout << "No ducks left\n";
-        std::cout << "You shot " << gameState->getDucksShot() << " ducks!\n";
-    }
-
     resetActors();
     gameState->reloadBullets();
-    gameState->setState(GameStateType::READY);
+
+    if (gameState->isRoundEnd()) {
+        if (gameState->isTargetMet()) {
+            if (gameState->isGameFinished()) {
+                gameState->setState(GameStateType::FINISHED);
+            } else {
+                gameState->setState(GameStateType::ROUND_WON);
+            }
+        } else {
+            gameState->setState(GameStateType::GAME_OVER);
+        }
+    } else {
+        gameState->setState(GameStateType::READY);
+    }
 }
 
 void Game::resetActors() {

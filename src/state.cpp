@@ -32,6 +32,11 @@ void GameState::resetDucksForRound() {
     ducksShot = 0;
 }
 
+void GameState::resetGame() {
+    resetDucksForRound();
+    round = 0;
+}
+
 void GameState::decreaseBullets() {
     bullets--;
 }
@@ -72,6 +77,15 @@ int GameState::getTarget() {
     return target;
 }
 
+int GameState::getRound() {
+    return round;
+}
+
+double GameState::getTimeToShoot() {
+    ClockType::time_point now = clock.getCurrentTime();
+    return std::chrono::duration<double>(now - timeToShoot).count();
+}
+
 void GameState::startTimeToShoot() {
     timeToShoot = clock.getCurrentTime();
 }
@@ -79,4 +93,16 @@ void GameState::startTimeToShoot() {
 bool GameState::timeToShootExpired() {
     ClockType::time_point now = clock.getCurrentTime();
     return std::chrono::duration<double>(now - timeToShoot).count() >= ALLOWED_SHOOTING_TIME;
+}
+
+bool GameState::isRoundEnd() {
+    return ducksLeft == 0;
+}
+
+bool GameState::isRoundBegin() {
+    return ducksLeft == DUCKS_PER_ROUND;
+}
+
+bool GameState::isGameFinished() {
+    return round == TOTAL_ROUNDS - 1;
 }

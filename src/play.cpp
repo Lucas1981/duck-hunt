@@ -35,13 +35,17 @@ void Play::update(bool isStateChanged) {
         actor->update();
 
         if (!actor->isPlayer()) {
-            if (actor->getY() == 0) {
+            if (
+                !static_cast<Duck*>(actor)->isEscaped() &&
+                actor->getY() == 0
+            ) {
+                static_cast<Duck*>(actor)->handleEscaped();
                 gameState->decreaseDucks();
-                gameState->setState(GameStateType::RESET);
+                gameState->setState(GameStateType::FLOWN);
             }
 
             if (isStateChanged) {
-                static_cast<Duck*>(actor)->handleEscaped();
+                static_cast<Duck*>(actor)->handleEscaping();
             }
         }
     }
@@ -71,7 +75,7 @@ void Play::inputHandler() {
                 gameState->increaseDucksShot();
                 gameState->setState(GameStateType::HIT);
             } else if (gameState->getBullets() == 0) {
-                (static_cast<Duck*>(*it1))->handleEscaped();
+                (static_cast<Duck*>(*it1))->handleEscaping();
                 gameState->setState(GameStateType::MISS);
             }
         }

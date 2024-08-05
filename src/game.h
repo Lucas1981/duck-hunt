@@ -24,7 +24,12 @@ private:
     void handleRunningState();
     void handleHitState();
     void handleMissState();
+    void handleFlownState();
     void handleResetState();
+    void handleRoundBeginState();
+    void handleRoundWonState();
+    void handleGameOverState();
+    void handleFinishedState();
     bool initialize();
     void cleanup();
     void resetActors();

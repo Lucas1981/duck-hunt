@@ -22,7 +22,9 @@ public:
     sf::FloatRect getTranslatedHitbox() const override;
     Animations::AnimationIndex animationKey;
     void handleShot();
+    void handleEscaping();
     void handleEscaped();
+    bool isEscaped();
 
 private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;

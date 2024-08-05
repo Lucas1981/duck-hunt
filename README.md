@@ -13,24 +13,24 @@ Todo:
 - [x] Add collision
 - [x] Add text module
 - [x] Add listener on red window button
-- [ ] Refine gameplay lifecycle:
+- [x] Refine gameplay lifecycle:
     - [x] Title screen state
-    - [ ] ?Begin round state?
+    - [x] Begin round state
     - [x] Reset state
     - [x] Ready state
     - [x] Running state
     - [x] Shot state
     - [x] Fly away state
-    - [ ] ?Flew away state?
-    - [ ] End of round state (tally?)
-    - [ ] Congratulations state
-    - [ ] Game over state
-    - [ ] Game beat state
+    - [x] Flew away state
+    - [x] Congratulations state
+    - [x] Game over state
+    - [x] Game beat state
+- [ ] Add UI
 - [ ] Finalize shot animations
 - [ ] Manage round configuration (with rounds module maybe)
 - [ ] Add shot white-overlay
 - [ ] Add states and state animations for player (disabled crosshairs)
-- [ ] Add UI
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
+- [ ] Expand logic for duck when coming up
 
