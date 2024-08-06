@@ -17,11 +17,12 @@ Play::Play(
     Screens& _screens,
     std::list<Actor*>& _actors,
     GameState* _gameState,
-    Animator& animator
+    Animator& animator,
+    Text& text
 )
     : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors)
 {
-    userInterface = new UserInterface(gameState, animator);
+    userInterface = new UserInterface(gameState, animator, text);
 }
 
 Play::~Play() {

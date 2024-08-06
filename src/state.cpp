@@ -35,6 +35,7 @@ void GameState::resetDucksForRound() {
 void GameState::resetGame() {
     resetDucksForRound();
     round = 0;
+    score = 0;
 }
 
 void GameState::decreaseBullets() {
@@ -47,6 +48,7 @@ void GameState::decreaseDucks() {
 
 void GameState::increaseDucksShot() {
     ducksShot++;
+    score += SCORE_PER_DUCK;
 }
 
 void GameState::increaseRound() {
@@ -79,6 +81,10 @@ int GameState::getTarget() {
 
 int GameState::getRound() {
     return round;
+}
+
+int GameState::getScore() {
+    return score;
 }
 
 double GameState::getTimeToShoot() {

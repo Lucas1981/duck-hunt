@@ -37,6 +37,7 @@ public:
     int getDucksPerRound();
     int getTarget();
     int getRound();
+    int getScore();
     double getTimeToShoot();
     bool isTargetMet();
     bool timeToShootExpired();
@@ -49,11 +50,13 @@ private:
     static constexpr int DUCKS_PER_ROUND = 10;
     static constexpr int TOTAL_ROUNDS = 6;
     static constexpr int ALLOWED_SHOOTING_TIME = 6;
+    static constexpr int SCORE_PER_DUCK = 100;
     int round;
     int bullets;
     int ducksLeft;
     int ducksShot;
     int target = 7;
+    int score;
     ClockType::time_point lastStateChange;
     ClockType::time_point timeToShoot;
     GameStateType state;

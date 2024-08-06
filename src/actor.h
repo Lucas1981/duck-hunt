@@ -14,6 +14,7 @@ enum class AgentType {
 
 enum class AgentState {
     IDLE,
+    ACTIVE,
     FLYING,
     ESCAPING,
     ESCAPED,

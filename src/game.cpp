@@ -188,7 +188,7 @@ bool Game::initialize() {
     gameState = new GameState(clock);
     input.setWindow(graphics.getWindow());
     resetActors();
-    play = new Play(graphics, screens, actors, gameState, animator);
+    play = new Play(graphics, screens, actors, gameState, animator, text);
     return true;
 }
 

@@ -8,6 +8,7 @@ class GameState;  // lines 8-8
 class Graphics;  // lines 9-9
 class Screens;  // lines 10-10
 class UserInterface;
+class Text;
 
 class Play {
 public:
@@ -16,11 +17,12 @@ public:
         Screens& screens,
         std::list<Actor*>& actors,
         GameState* gameState,
-        Animator& animator
+        Animator& animator,
+        Text& text
     );
     ~Play();
     void run(bool handleInput);
-
+    
 private:
     void update();
     void inputHandler();

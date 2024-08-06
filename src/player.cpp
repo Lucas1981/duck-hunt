@@ -23,7 +23,7 @@ void Player::draw(sf::RenderTarget& target) {
         target,
         static_cast<float>(x),
         static_cast<float>(y),
-        Animations::CROSSHAIRS,
+        Animations::RED_CROSSHAIRS,
         0
     );
 }
