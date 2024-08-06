@@ -161,7 +161,7 @@ void Game::handleResetState() {
     } else {
         resetActors();
         gameState->startTimeToShoot();
-        actors.push_front(new Duck(animator, clock));
+        actors.push_front(new Duck(animator, clock, gameState->getRoundSpeed()));
         gameState->reloadBullets();
         gameState->setState(GameStateType::RUNNING);
     }

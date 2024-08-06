@@ -15,7 +15,7 @@ using namespace Constants;
 
 class Duck : public Actor {
 public:
-    Duck(Animator& _animator, Clock& clock);
+    Duck(Animator& _animator, Clock& clock, double _speed);
     ~Duck();
     void update() override;
     void draw(sf::RenderTarget& target) override;
@@ -38,7 +38,6 @@ private:
     static constexpr double LOWER_BOUND = SCREEN_HEIGHT * 0.8;
     static constexpr double TIME_TO_DIRECTION_CHANGE = 500;
     static constexpr double TIME_TO_FALL = 500;
-    static constexpr double MOVING_SPEED = 400;
     static constexpr double FALLING_SPEED = 300;
 
     ClockType::time_point startTime;
@@ -53,6 +52,7 @@ private:
     static std::uniform_int_distribution<> startXDistribution; // Distribution for x coordinate
     int getRandomDirection();
     int getRandomStartX();
+    double speed;
 
     std::unordered_map<Animations::AnimationIndex, sf::FloatRect> hitboxes;
     void initializeHitboxes();

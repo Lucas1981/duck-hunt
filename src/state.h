@@ -1,7 +1,9 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
-#include "clock.h"
+#include <stddef.h>  // for size_t
+#include <vector>    // for vector
+#include "clock.h"   // for ClockType
 
 enum class GameStateType {
     TITLE_SCREEN,
@@ -15,6 +17,11 @@ enum class GameStateType {
     GAME_OVER,
     ROUND_WON,
     FINISHED
+};
+
+struct Round {
+    double speed;
+    int target;
 };
 
 class GameState {
@@ -35,10 +42,10 @@ public:
     int getDucksLeft();
     int getDucksShot();
     int getDucksPerRound();
-    int getTarget();
-    int getRound();
+    size_t getRound();
     int getScore();
     double getTimeToShoot();
+    double getRoundSpeed();
     bool isTargetMet();
     bool timeToShootExpired();
     bool isRoundEnd();
@@ -48,19 +55,19 @@ public:
 private:
     static constexpr int NUMBER_OF_ALLOWED_BULLETS = 3;
     static constexpr int DUCKS_PER_ROUND = 10;
-    static constexpr int TOTAL_ROUNDS = 6;
     static constexpr int ALLOWED_SHOOTING_TIME = 6;
     static constexpr int SCORE_PER_DUCK = 100;
-    int round;
+    size_t round;
     int bullets;
     int ducksLeft;
     int ducksShot;
-    int target = 7;
     int score;
+    std::vector<Round> rounds;
     ClockType::time_point lastStateChange;
     ClockType::time_point timeToShoot;
     GameStateType state;
     Clock& clock;
+    void initializeRounds();
 };
 
 #endif // GAME_STATE_H

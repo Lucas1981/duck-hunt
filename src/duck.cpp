@@ -15,7 +15,14 @@ std::uniform_int_distribution<> Duck::startXDistribution(
     static_cast<int>(UNIT_SIZE), static_cast<int>(SCREEN_WIDTH - UNIT_SIZE)
 );
 
-Duck::Duck(Animator& _animator, Clock& _clock) : clock(_clock), animator(_animator) {
+Duck::Duck(
+    Animator& _animator,
+    Clock& _clock,
+    double _speed
+) : clock(_clock),
+    animator(_animator),
+    speed(_speed)
+{
     x = getRandomStartX();
     y = LOWER_BOUND;
     type = AgentType::DUCK;
@@ -69,9 +76,9 @@ void Duck::update() {
     }
 
     double elapsedTime = clock.getElapsedTime();
-    double speed = state == AgentState::FALLING ? FALLING_SPEED : MOVING_SPEED;
-    x += speed * elapsedTime * directionX;
-    y += speed * elapsedTime * directionY;
+    double finalSpeed = state == AgentState::FALLING ? FALLING_SPEED : speed;
+    x += finalSpeed * elapsedTime * directionX;
+    y += finalSpeed * elapsedTime * directionY;
 
     if (x < LEFT_BOUND) {
         x = LEFT_BOUND;
