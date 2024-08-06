@@ -61,6 +61,7 @@ add_executable(DuckHunt
     src/screens.cpp
     src/collision.cpp
     src/text.cpp
+    src/user-interface.cpp
 )
 
 # Link SFML libraries

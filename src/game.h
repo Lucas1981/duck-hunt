@@ -9,9 +9,9 @@
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
 #include "text.h"      // for Text
-class Actor;  // lines 11-11
-class GameState;  // lines 12-12
-class Play;  // lines 13-13
+class Actor;  // lines 13-13
+class GameState;  // lines 14-14
+class Play;  // lines 15-15
 
 class Game {
 public:

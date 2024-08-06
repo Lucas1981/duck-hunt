@@ -149,16 +149,6 @@ void Game::handleFinishedState() {
     drawText("Congratulations! You beat the game!");
 }
 
-bool Game::initialize() {
-    std::cout << "Initializing...\n";
-    gameState = new GameState(clock);
-    input.setWindow(graphics.getWindow());
-    resetActors();
-    play = new Play(graphics, screens, actors, gameState);
-
-    return true;
-}
-
 void Game::handleResetState() {
     resetActors();
     gameState->reloadBullets();
@@ -191,6 +181,15 @@ void Game::drawText(const std::string& str) {
 void Game::resetActors() {
     actors.clear();
     actors.push_back(new Player(input, animator));
+}
+
+bool Game::initialize() {
+    std::cout << "Initializing...\n";
+    gameState = new GameState(clock);
+    input.setWindow(graphics.getWindow());
+    resetActors();
+    play = new Play(graphics, screens, actors, gameState, animator);
+    return true;
 }
 
 void Game::cleanup() {

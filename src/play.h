@@ -2,10 +2,12 @@
 #define PLAY_H
 
 #include <list>  // for list
-class Actor;  // lines 6-6
-class GameState;
-class Graphics;  // lines 7-7
-class Screens;  // lines 8-8
+class Actor;  // lines 7-7
+class Animator;
+class GameState;  // lines 8-8
+class Graphics;  // lines 9-9
+class Screens;  // lines 10-10
+class UserInterface;
 
 class Play {
 public:
@@ -13,8 +15,10 @@ public:
         Graphics& graphics,
         Screens& screens,
         std::list<Actor*>& actors,
-        GameState* gameState
+        GameState* gameState,
+        Animator& animator
     );
+    ~Play();
     void run(bool handleInput);
 
 private:
@@ -25,6 +29,7 @@ private:
     Screens& screens;
     GameState* gameState;
     std::list<Actor*>& actors;
+    UserInterface* userInterface;
 };
 
 #endif // PLAY_H

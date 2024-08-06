@@ -8,10 +8,25 @@
 #include "player.h"                         // for Player
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
+#include "user-interface.h"                 // for UserInterface
+class Animator;
 namespace sf { class RenderTarget; }  // lines 11-11
 
-Play::Play(Graphics& _graphics, Screens& _screens, std::list<Actor*>& _actors, GameState* _gameState)
-    : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors) {}
+Play::Play(
+    Graphics& _graphics,
+    Screens& _screens,
+    std::list<Actor*>& _actors,
+    GameState* _gameState,
+    Animator& animator
+)
+    : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors)
+{
+    userInterface = new UserInterface(gameState, animator);
+}
+
+Play::~Play() {
+    delete userInterface;
+}
 
 void Play::run(bool handleInput) {
     update();
@@ -105,4 +120,6 @@ void Play::draw() {
     for (Actor* actor : actors) {
         actor->draw(renderTarget);
     }
+
+    userInterface->draw(graphics.getCanvas());
 }

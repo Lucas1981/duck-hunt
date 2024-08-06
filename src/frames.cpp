@@ -13,6 +13,9 @@ Frames::Frames() {
     addFrame(384, 0, 128, 128); // 3 shot
     addFrame(0, 128, 128, 128); // 4 Falling, LTR
     addFrame(128, 128, 128, 128); // 5 Falling, RTL
+    addFrame(255, 128, 32, 32); // 6 Bullet
+    addFrame(287, 128, 32, 32); // 7 White ducky
+    addFrame(319 + 64, 128, 32, 32); // 8 Red ducky
 }
 
 void Frames::loadTexture(const std::string& filePath) {
