@@ -45,7 +45,7 @@ int Duck::getRandomStartX() {
 }
 
 void Duck::update() {
-    if (state == AgentState::ESCAPED) {
+    if (state == AgentState::ESCAPED || state == AgentState::DEAD) {
         return;
     }
 
@@ -100,6 +100,10 @@ void Duck::handleDirectionChange() {
 }
 
 void Duck::draw(sf::RenderTarget& target) {
+    if (state == AgentState::DEAD) {
+        return;
+    }
+
     ClockType::time_point currentTime = clock.getCurrentTime();
     float elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 
@@ -134,6 +138,10 @@ void Duck::handleEscaping() {
 
 void Duck::handleEscaped() {
     state = AgentState::ESCAPED;
+}
+
+void Duck::handleDied() {
+    state = AgentState::DEAD;
 }
 
 sf::FloatRect Duck::getTranslatedHitbox() const {

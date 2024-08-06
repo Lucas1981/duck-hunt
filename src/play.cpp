@@ -70,7 +70,8 @@ void Play::update() {
             duck->isFalling() &&
             duck->isLowerThresholdReached()
         ) {
-            gameState->setState(GameStateType::RESET);
+            duck->handleDied();
+            gameState->setState(GameStateType::READY);
         }
 
         if (isStateChanged) {

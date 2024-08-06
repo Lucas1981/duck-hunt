@@ -83,15 +83,6 @@ void Game::handleTitleScreenState() {
     screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
 }
 
-void Game::handleReadyState() {
-    if (gameState->getTimeSinceLastStateChange() > 1) {
-        gameState->startTimeToShoot();
-        actors.push_front(new Duck(animator, clock));
-        gameState->setState(GameStateType::RUNNING);
-    }
-    play->run(false);
-}
-
 void Game::handleRoundBeginState() {
     if (gameState->getTimeSinceLastStateChange() > 1) {
         gameState->setState(GameStateType::READY);
@@ -100,6 +91,13 @@ void Game::handleRoundBeginState() {
     std::stringstream roundString;
     roundString << "Round " << gameState->getRound() + 1;
     drawText(roundString.str());
+}
+
+void Game::handleReadyState() {
+    if (gameState->getTimeSinceLastStateChange() > 1) {
+        gameState->setState(GameStateType::RESET);
+    }
+    play->run(false);
 }
 
 void Game::handleRunningState() {
@@ -118,7 +116,7 @@ void Game::handleMissState() {
 // After the duck has flown away, we want to still sustain this state for another second.
 void Game::handleFlownState() {
     if (gameState->getTimeSinceLastStateChange() > 1) {
-        gameState->setState(GameStateType::RESET);
+        gameState->setState(GameStateType::READY);
     }
     handleMissState();
 }
@@ -150,9 +148,6 @@ void Game::handleFinishedState() {
 }
 
 void Game::handleResetState() {
-    resetActors();
-    gameState->reloadBullets();
-
     if (gameState->isRoundEnd()) {
         if (gameState->isTargetMet()) {
             if (gameState->isGameFinished()) {
@@ -164,7 +159,11 @@ void Game::handleResetState() {
             gameState->setState(GameStateType::GAME_OVER);
         }
     } else {
-        gameState->setState(GameStateType::READY);
+        resetActors();
+        gameState->startTimeToShoot();
+        actors.push_front(new Duck(animator, clock));
+        gameState->reloadBullets();
+        gameState->setState(GameStateType::RUNNING);
     }
 }
 

@@ -25,6 +25,7 @@ public:
     void handleEscaping();
     void handleEscaped();
     void handleFalling();
+    void handleDied();
     bool isEscaped();
     bool isFalling();
     bool isUpperThresholdReached();
