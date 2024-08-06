@@ -89,30 +89,32 @@ void Play::inputHandler() {
         }
     }
 
-    if (player->getShot()) {
-        gameState->decreaseBullets();
-        sf::FloatRect playerHitbox = player->getTranslatedHitbox();
+    if (!player->getShot()) {
+        return;
+    }
 
-        for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-            if ((*it1)->isPlayer()) {
-                continue;
-            }
+    gameState->decreaseBullets();
+    sf::FloatRect playerHitbox = player->getTranslatedHitbox();
 
-            Duck* duck = static_cast<Duck*>(*it1);
-
-            if (checkHitboxCollision(duck->getTranslatedHitbox(), playerHitbox)) {
-                duck->handleShot();
-                gameState->decreaseDucks();
-                gameState->increaseDucksShot();
-                gameState->setState(GameStateType::HIT);
-            } else if (gameState->getBullets() == 0) {
-                duck->handleEscaping();
-                gameState->setState(GameStateType::MISS);
-            }
+    for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
+        if ((*it1)->isPlayer()) {
+            continue;
         }
 
-        player->shotHandled();
+        Duck* duck = static_cast<Duck*>(*it1);
+
+        if (checkHitboxCollision(duck->getTranslatedHitbox(), playerHitbox)) {
+            duck->handleShot();
+            gameState->decreaseDucks();
+            gameState->increaseDucksShot();
+            gameState->setState(GameStateType::HIT);
+        } else if (gameState->getBullets() == 0) {
+            duck->handleEscaping();
+            gameState->setState(GameStateType::MISS);
+        }
     }
+
+    player->shotHandled();
 }
 
 void Play::draw() {

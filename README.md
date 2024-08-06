@@ -32,9 +32,8 @@ Todo:
 - [x] Add UI
 - [x] Add time between last duck shot / missed and final "you beat the round" message
     -  [x] Maybe reorder READY and RESET states.
-- [ ] Display 'ducks shot / ducks left / ducks missed / target' properly in the UI
 - [ ] Manage round configuration (with rounds module maybe)
-- [ ] Add states and state animations for player (disabled crosshairs)
+- [ ] Display 'ducks shot / ducks left / ducks missed / target' properly in the UI
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
 - [ ] Expand logic for duck when coming up
