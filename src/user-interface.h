@@ -21,7 +21,10 @@ private:
     void drawScore(sf::RenderTarget& target);
 
     static constexpr float BULLETS_OFFSET_X = UNIT_SIZE + 64;
-    static constexpr float DUCKS_OFFSET_X = UNIT_SIZE + 224;
+    static constexpr float DUCKS_TEXT_OFFSET_X = UNIT_SIZE + 192;
+    static constexpr float DUCKS_ICONS_OFFSET_X = UNIT_SIZE + 254;
+    static constexpr float DUCKS_OFFSET_Y = UNIT_SIZE + 484;
+    static constexpr float TARGET_OFFSET_Y = DUCKS_OFFSET_Y + 32;
     static constexpr float VALUES_OFFSET_Y = UNIT_SIZE + 512;
     static constexpr float TEXT_OFFSET_Y = UNIT_SIZE + 512 - 38;
     static constexpr float SCORE_TEXT_OFFSET_X = UNIT_SIZE + 608;

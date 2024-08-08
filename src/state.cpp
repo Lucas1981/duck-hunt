@@ -88,6 +88,10 @@ int GameState::getBullets() {
     return bullets;
 }
 
+int GameState::getTarget() {
+    return rounds[round].target;
+}
+
 bool GameState::isTargetMet() {
     return ducksShot >= rounds[round].target;
 }

@@ -42,5 +42,7 @@ Todo:
 - [ ] Add score animation
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
+- [ ] ?Consider taking the player out of the agent pool?
+- [ ] Test hit boxes
 - [ ] Test application with leak trackers
 

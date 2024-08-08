@@ -37,7 +37,7 @@ void UserInterface::drawBullets(sf::RenderTarget& target) {
 void UserInterface::drawTally(sf::RenderTarget& target) {
     const auto& duckAuditStates = gameState->getDuckAuditStates();
 
-    text.drawText(target, "hit", DUCKS_OFFSET_X, TEXT_OFFSET_Y, TextAlignment::LEFT);
+    text.drawText(target, "hit", DUCKS_TEXT_OFFSET_X, TEXT_OFFSET_Y, TextAlignment::LEFT);
     for (size_t i = 0; i < 10; i++) {
         Animations::AnimationIndex animationIndex = 
             Animations::AnimationIndex::WHITE_DUCK;
@@ -53,11 +53,21 @@ void UserInterface::drawTally(sf::RenderTarget& target) {
 
         animator.draw(
             target,
-            static_cast<float>(DUCKS_OFFSET_X + (i * 32)),
-            VALUES_OFFSET_Y,
+            static_cast<float>(DUCKS_ICONS_OFFSET_X + (i * 32)),
+            DUCKS_OFFSET_Y,
             animationIndex,
             gameState->getAnimationTime()
         );
+
+        if (i < static_cast<size_t>(gameState->getTarget())) {
+            animator.draw(
+                target,
+                static_cast<float>(DUCKS_ICONS_OFFSET_X + (i * 32)),
+                TARGET_OFFSET_Y,
+                Animations::AnimationIndex::TARGET,
+                0
+            );
+        }
     }
 }
 

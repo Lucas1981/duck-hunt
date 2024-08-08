@@ -45,6 +45,7 @@ public:
     int getBullets();
     size_t getRound();
     int getScore();
+    int getTarget();
     double getRoundSpeed();
     size_t getDuckAuditIndex();
     bool isTargetMet();
