@@ -25,6 +25,7 @@ StateHandlers::StateHandlers(
     graphics(_graphics),
     clock(_clock) {
     play = new Play(graphics, screens, actors, gameState, animator, text);
+    resetActors();
 }
 
 StateHandlers::~StateHandlers() {
@@ -81,6 +82,32 @@ void StateHandlers::handleFlownState() {
     handleMissState();
 }
 
+void StateHandlers::handleTallyState() {
+    bool result = gameState->performTally();
+
+    if (result) {
+        gameState->setState(GameStateType::HOLD);
+    } else {
+        if (gameState->isTargetMet()) {
+            if (gameState->isGameFinished()) {
+                gameState->setState(GameStateType::FINISHED);
+            } else {
+                gameState->setState(GameStateType::ROUND_WON);
+            }
+        } else {
+            gameState->setState(GameStateType::GAME_OVER);
+        }
+    }
+    play->run(false);
+}
+
+void StateHandlers::handleHoldState() {
+    if (gameState->getTimeSinceLastStateChange() > 0.4) {
+        gameState->setState(GameStateType::TALLY);
+    }
+    play->run(false);
+}
+
 void StateHandlers::handleRoundWonState() {
     if (gameState->getTimeSinceLastStateChange() > 2) {
         gameState->increaseRound();
@@ -109,15 +136,7 @@ void StateHandlers::handleFinishedState() {
 
 void StateHandlers::handleResetState() {
     if (gameState->isRoundEnd()) {
-        if (gameState->isTargetMet()) {
-            if (gameState->isGameFinished()) {
-                gameState->setState(GameStateType::FINISHED);
-            } else {
-                gameState->setState(GameStateType::ROUND_WON);
-            }
-        } else {
-            gameState->setState(GameStateType::GAME_OVER);
-        }
+        gameState->setState(GameStateType::TALLY);
     } else {
         resetActors();
         gameState->startTimeToShoot();

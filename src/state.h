@@ -14,6 +14,8 @@ enum class GameStateType {
     HIT,
     MISS,
     FLOWN,
+    TALLY,
+    HOLD,
     GAME_OVER,
     ROUND_WON,
     FINISHED
@@ -49,9 +51,14 @@ public:
     bool timeToShootExpired();
     bool isRoundEnd();
     bool isGameFinished();
+    bool performTally();
+    
     const std::vector<bool>& getDuckAuditStates() const;
 
 private:
+    void initializeRounds();
+    void resetDuckAuditStates();
+
     static constexpr int NUMBER_OF_ALLOWED_BULLETS = 3;
     static constexpr int DUCKS_PER_ROUND = 10;
     static constexpr int ALLOWED_SHOOTING_TIME = 6;
@@ -66,8 +73,6 @@ private:
     ClockType::time_point timeToShoot;
     GameStateType state;
     Clock& clock;
-    void initializeRounds();
-    void resetDuckAuditStates();
     std::vector<bool> duckAuditStates;
 };
 

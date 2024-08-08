@@ -49,6 +49,12 @@ void Game::run() {
             case GameStateType::FLOWN:
                 stateHandlers->handleFlownState();
                 break;
+            case GameStateType::TALLY:
+                stateHandlers->handleTallyState();
+                break;
+            case GameStateType::HOLD:
+                stateHandlers->handleHoldState();
+                break;
             case GameStateType::ROUND_WON:
                 stateHandlers->handleRoundWonState();
                 break;

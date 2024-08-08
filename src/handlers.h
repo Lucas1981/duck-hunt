@@ -29,6 +29,8 @@ public:
     void handleHitState();
     void handleMissState();
     void handleFlownState();
+    void handleTallyState();
+    void handleHoldState();
     void handleResetState();
     void handleRoundBeginState();
     void handleRoundWonState();

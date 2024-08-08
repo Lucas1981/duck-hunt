@@ -1,6 +1,8 @@
 #include "state.h"
-#include <__bit_reference>  // for fill
+#include <__bit_reference>  // for __bit_iterator, operator-, operator==, fill
+#include <algorithm>        // for find
 #include <chrono>           // for duration, operator-, time_point, duration...
+#include <iterator>         // for distance
 
 GameState::GameState(Clock& _clock) : state(GameStateType::TITLE_SCREEN), clock(_clock)  {
     lastStateChange = clock.getCurrentTime();
@@ -126,4 +128,35 @@ bool GameState::isRoundEnd() {
 
 bool GameState::isGameFinished() {
     return round == rounds.size() - 1;
+}
+
+bool GameState::performTally() {
+    // Find the first false value
+    auto firstFalseIt = std::find(duckAuditStates.begin(), duckAuditStates.end(), false);
+    
+    // If no false value is found, return false
+    if (firstFalseIt == duckAuditStates.end()) {
+        return false;
+    }
+    
+    // Find the next true value after the first false value
+    auto nextTrueIt = std::find(firstFalseIt + 1, duckAuditStates.end(), true);
+    
+    // If no true value is found, return false
+    if (nextTrueIt == duckAuditStates.end()) {
+        return false;
+    }
+
+    // Calculate the index of the first false value
+    size_t firstFalseIndex = static_cast<size_t>(std::distance(duckAuditStates.begin(), firstFalseIt));
+
+    // Shift all elements after the first false one position to the left
+    for (size_t i = firstFalseIndex; i < duckAuditStates.size() - 1; ++i) {
+        duckAuditStates[i] = duckAuditStates[i + 1];
+    }
+    
+    // Append a false value at the end of the array
+    duckAuditStates[duckAuditStates.size() - 1] = false;
+
+    return true;
 }
