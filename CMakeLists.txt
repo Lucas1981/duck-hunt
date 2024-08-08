@@ -63,6 +63,7 @@ add_executable(DuckHunt
     src/text.cpp
     src/user-interface.cpp
     src/handlers.cpp
+    src/tally-util.cpp
 )
 
 # Link SFML libraries

@@ -37,7 +37,7 @@ Todo:
 - [x] Garbage collect deactivated agents
 - [x] Cut up steps in UI module
 - [x] Refactor out handlers
-- [ ] Include tallying mechanism at the end of the round
+- [x] Include tallying mechanism at the end of the round
 - [ ] Display target in the UI
 - [ ] Add score animation
 - [ ] Add sounds
