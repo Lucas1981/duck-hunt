@@ -23,10 +23,7 @@ public:
     Animations::AnimationIndex animationKey;
     void handleShot();
     void handleEscaping();
-    void handleEscaped();
     void handleFalling();
-    void handleDied();
-    bool isEscaped();
     bool isFalling();
     bool isUpperThresholdReached();
     bool isLowerThresholdReached();

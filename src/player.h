@@ -23,7 +23,6 @@ private:
     static constexpr double RIGHT_BOUND = SCREEN_WIDTH + (UNIT_SIZE / 2);
     static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
     static constexpr double LOWER_BOUND = SCREEN_HEIGHT + (UNIT_SIZE / 2);
-    static constexpr double speed = 250;
     bool shot;
     bool canShoot;
     Input& input;

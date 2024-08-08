@@ -17,10 +17,8 @@ enum class AgentState {
     ACTIVE,
     FLYING,
     ESCAPING,
-    ESCAPED,
     SHOT,
     FALLING,
-    DEAD
 };
 
 class Actor {
@@ -30,11 +28,16 @@ public:
     virtual void draw(sf::RenderTarget& target) = 0;
     virtual sf::FloatRect getTranslatedHitbox() const = 0;
     bool isPlayer() const { return type == AgentType::PLAYER; }
+    bool isActive() { return active; }
+    void deactivate() { active = false; }
     double getY() { return y; }
 
 protected:
+    Actor() : active(true) {} 
+
     double x;
     double y;
+    bool active;
     AgentType type;
     AgentState state;
     Animator* animator;

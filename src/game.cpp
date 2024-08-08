@@ -136,7 +136,7 @@ void Game::handleGameOverState() {
         gameState->setState(GameStateType::TITLE_SCREEN);
     }
     play->run(false);
-    drawText("Game over!");
+    drawText("Game over");
 }
 
 void Game::handleFinishedState() {

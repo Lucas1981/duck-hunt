@@ -16,6 +16,10 @@ public:
     void draw(sf::RenderTarget& target);
 
 private:
+    void drawBullets(sf::RenderTarget& target);
+    void drawTally(sf::RenderTarget& target);
+    void drawScore(sf::RenderTarget& target);
+
     static constexpr float BULLETS_OFFSET_X = UNIT_SIZE + 64;
     static constexpr float DUCKS_OFFSET_X = UNIT_SIZE + 224;
     static constexpr float VALUES_OFFSET_Y = UNIT_SIZE + 512;

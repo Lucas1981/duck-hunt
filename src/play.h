@@ -27,6 +27,7 @@ private:
     void update();
     void inputHandler();
     void draw();
+    void removeInactiveActors();
     Graphics& graphics;
     Screens& screens;
     GameState* gameState;

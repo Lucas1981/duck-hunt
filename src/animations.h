@@ -12,7 +12,7 @@ namespace Animations {
         BULLET = 4,
         WHITE_DUCK = 5,
         RED_DUCK = 6,
-        GREY_CROSSHAIRS = 7
+        FLICKER_DUCK = 7
     };
 
     const std::vector<std::vector<int>> animations = {
@@ -23,7 +23,7 @@ namespace Animations {
         {6}, // 4 BULLET
         {7}, // 5 WHITE_DUCK
         {8}, // 6 RED_DUCK,
-        {9} // 7 GREY_CROSSHAIRS
+        {7, 9} // 7 FLICKER_DUCK
     };
 }
 

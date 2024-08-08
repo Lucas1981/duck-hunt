@@ -30,6 +30,7 @@ public:
     GameStateType getState() const;
     void setState(GameStateType newState);
     double getTimeSinceLastStateChange();
+    float getAnimationTime();
     void reloadBullets();
     void decreaseBullets();
     void decreaseDucks();
@@ -38,6 +39,7 @@ public:
     void resetDucksForRound();
     void startTimeToShoot();
     void resetGame();
+    void markAuditDuckAsShot(size_t index);
     int getBullets();
     int getDucksLeft();
     int getDucksShot();
@@ -46,11 +48,13 @@ public:
     int getScore();
     double getTimeToShoot();
     double getRoundSpeed();
+    size_t getDuckAuditIndex();
     bool isTargetMet();
     bool timeToShootExpired();
     bool isRoundEnd();
     bool isRoundBegin();
     bool isGameFinished();
+    const std::vector<bool>& getDuckAuditStates() const;
 
 private:
     static constexpr int NUMBER_OF_ALLOWED_BULLETS = 3;
@@ -68,6 +72,8 @@ private:
     GameStateType state;
     Clock& clock;
     void initializeRounds();
+    void resetDuckAuditStates();
+    std::vector<bool> duckAuditStates;
 };
 
 #endif // GAME_STATE_H

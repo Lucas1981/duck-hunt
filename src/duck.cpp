@@ -30,6 +30,7 @@ Duck::Duck(
     startTime = clock.getCurrentTime();
     lastDirectionChange = clock.getCurrentTime();
     animationKey = Animations::FLY_HORIZONTAL_RIGHT;
+    active = true;
     handleDirectionChange();
     initializeHitboxes();
 }
@@ -52,10 +53,6 @@ int Duck::getRandomStartX() {
 }
 
 void Duck::update() {
-    if (state == AgentState::ESCAPED || state == AgentState::DEAD) {
-        return;
-    }
-
     if (
         state == AgentState::SHOT &&
         std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -103,14 +100,10 @@ void Duck::handleDirectionChange() {
     do {    
         directionX = getRandomDirection();
         directionY = getRandomDirection();
-    } while(directionX == 0 && directionY == 0);
+    } while (directionX == 0 && directionY == 0);
 }
 
 void Duck::draw(sf::RenderTarget& target) {
-    if (state == AgentState::DEAD) {
-        return;
-    }
-
     ClockType::time_point currentTime = clock.getCurrentTime();
     float elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 
@@ -143,23 +136,11 @@ void Duck::handleEscaping() {
     state = AgentState::ESCAPING;
 }
 
-void Duck::handleEscaped() {
-    state = AgentState::ESCAPED;
-}
-
-void Duck::handleDied() {
-    state = AgentState::DEAD;
-}
-
 sf::FloatRect Duck::getTranslatedHitbox() const {
     sf::FloatRect currentHitbox = hitboxes.at(animationKey);
     currentHitbox.left += static_cast<float>(x);
     currentHitbox.top += static_cast<float>(y);
     return currentHitbox;
-}
-
-bool Duck::isEscaped() {
-    return state == AgentState::ESCAPED;
 }
 
 bool Duck::isFalling() {

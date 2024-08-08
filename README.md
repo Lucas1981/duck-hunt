@@ -33,12 +33,14 @@ Todo:
 - [x] Add time between last duck shot / missed and final "you beat the round" message
     -  [x] Maybe reorder READY and RESET states.
 - [x] Manage round configuration
-- [ ] Display 'ducks shot / ducks left / ducks missed / target' properly in the UI
+- [x] Display 'ducks shot / ducks left / ducks missed' properly in the UI
+- [x] Garbage collect deactivated agents
+- [x] Cut up steps in UI module
+- [ ] Include tallying mechanism at the end of the round
+- [ ] Display target in the UI
 - [ ] Refactor out handlers
+- [ ] Add score animation
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
 - [ ] Test application with leak trackers
-- [ ] Add score animation
-- [ ] ?Include tallying mechanism at the end of the round?
-- [ ] ?Add shot white-overlay?
 

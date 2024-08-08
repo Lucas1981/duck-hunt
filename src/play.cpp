@@ -31,6 +31,7 @@ Play::~Play() {
 
 void Play::run(bool handleInput) {
     update();
+    removeInactiveActors();
     if (handleInput) {
         inputHandler();
     }
@@ -50,6 +51,10 @@ void Play::update() {
     for (auto actor : actors) {
         actor->update();
 
+        if (!actor->isActive()) {
+            delete actor;
+        }
+
         if (actor->isPlayer()) {
             continue;
         }
@@ -58,10 +63,9 @@ void Play::update() {
         Duck* duck = static_cast<Duck*>(actor);
 
         if (
-            !duck->isEscaped() &&
             duck->isUpperThresholdReached()
         ) {
-            duck->handleEscaped();
+            duck->deactivate();
             gameState->decreaseDucks();
             gameState->setState(GameStateType::FLOWN);
         }
@@ -70,7 +74,7 @@ void Play::update() {
             duck->isFalling() &&
             duck->isLowerThresholdReached()
         ) {
-            duck->handleDied();
+            duck->deactivate();
             gameState->setState(GameStateType::READY);
         }
 
@@ -107,6 +111,7 @@ void Play::inputHandler() {
             duck->handleShot();
             gameState->decreaseDucks();
             gameState->increaseDucksShot();
+            gameState->markAuditDuckAsShot(gameState->getDuckAuditIndex() - 1);
             gameState->setState(GameStateType::HIT);
         } else if (gameState->getBullets() == 0) {
             duck->handleEscaping();
@@ -115,6 +120,17 @@ void Play::inputHandler() {
     }
 
     player->shotHandled();
+}
+
+void Play::removeInactiveActors() {
+    for (auto it = actors.begin(); it != actors.end(); ) {
+        if (!(*it)->isActive()) {
+            delete *it;
+            it = actors.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 void Play::draw() {
