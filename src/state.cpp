@@ -87,20 +87,8 @@ int GameState::getBullets() {
     return bullets;
 }
 
-int GameState::getDucksLeft() {
-    return ducksLeft;
-}
-
-int GameState::getDucksShot() {
-    return ducksShot;
-}
-
 bool GameState::isTargetMet() {
     return ducksShot >= rounds[round].target;
-}
-
-int GameState::getDucksPerRound() {
-    return DUCKS_PER_ROUND;
 }
 
 size_t GameState::getRound() {
@@ -109,11 +97,6 @@ size_t GameState::getRound() {
 
 int GameState::getScore() {
     return score;
-}
-
-double GameState::getTimeToShoot() {
-    ClockType::time_point now = clock.getCurrentTime();
-    return std::chrono::duration<double>(now - timeToShoot).count();
 }
 
 double GameState::getRoundSpeed() {
@@ -139,10 +122,6 @@ bool GameState::timeToShootExpired() {
 
 bool GameState::isRoundEnd() {
     return ducksLeft == 0;
-}
-
-bool GameState::isRoundBegin() {
-    return ducksLeft == DUCKS_PER_ROUND;
 }
 
 bool GameState::isGameFinished() {

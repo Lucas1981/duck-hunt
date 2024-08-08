@@ -41,18 +41,13 @@ public:
     void resetGame();
     void markAuditDuckAsShot(size_t index);
     int getBullets();
-    int getDucksLeft();
-    int getDucksShot();
-    int getDucksPerRound();
     size_t getRound();
     int getScore();
-    double getTimeToShoot();
     double getRoundSpeed();
     size_t getDuckAuditIndex();
     bool isTargetMet();
     bool timeToShootExpired();
     bool isRoundEnd();
-    bool isRoundBegin();
     bool isGameFinished();
     const std::vector<bool>& getDuckAuditStates() const;
 
