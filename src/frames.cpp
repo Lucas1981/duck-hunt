@@ -17,7 +17,8 @@ Frames::Frames() {
     addFrame(256, 160, 32, 32); // 7 White ducky
     addFrame(256, 192, 32, 32); // 8 Red ducky
     addFrame(256, 224, 32, 32); // 9 Black ducky
-    addFrame(288, 128, 32, 32); // 9 Target
+    addFrame(288, 128, 32, 32); // 10 Target
+    addFrame(288, 160, 32, 32); // 11 Score
 }
 
 void Frames::loadTexture(const std::string& filePath) {

@@ -10,6 +10,7 @@ class Animator;
 enum class AgentType {
     PLAYER,
     DUCK,
+    SCORE
 };
 
 enum class AgentState {
@@ -27,8 +28,10 @@ public:
     virtual void draw(sf::RenderTarget& target) = 0;
     virtual sf::FloatRect getTranslatedHitbox() const = 0;
     bool isPlayer() const { return type == AgentType::PLAYER; }
+    bool isOpponent() const { return type == AgentType::DUCK; }
     bool isActive() { return active; }
     void deactivate() { active = false; }
+    double getX() { return x; }
     double getY() { return y; }
 
 protected:

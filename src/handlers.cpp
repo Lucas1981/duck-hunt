@@ -24,7 +24,9 @@ StateHandlers::StateHandlers(
     screens(_screens),
     graphics(_graphics),
     clock(_clock) {
-    play = new Play(graphics, screens, actors, gameState, animator, text);
+    play = new Play(
+        graphics, screens, actors, gameState, animator, text, clock
+    );
     resetActors();
 }
 

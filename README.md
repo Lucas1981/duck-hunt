@@ -38,8 +38,8 @@ Todo:
 - [x] Cut up steps in UI module
 - [x] Refactor out handlers
 - [x] Include tallying mechanism at the end of the round
-- [ ] Display target in the UI
-- [ ] Add score animation
+- [x] Display target in the UI
+- [x] Add score animation
 - [ ] Add sounds
 - [ ] Substitute assets and expand animations
 - [ ] ?Consider taking the player out of the agent pool?

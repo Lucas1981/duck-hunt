@@ -6,21 +6,27 @@
 #include "duck.h"                           // for Duck
 #include "graphics.h"                       // for Graphics
 #include "player.h"                         // for Player
+#include "score.h"                          // for Score
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
 #include "user-interface.h"                 // for UserInterface
-class Animator;
-namespace sf { class RenderTarget; }  // lines 11-11
+class Animator;  // lines 14-14
+namespace sf { class RenderTarget; }  // lines 15-15
 
 Play::Play(
     Graphics& _graphics,
     Screens& _screens,
     std::list<Actor*>& _actors,
     GameState* _gameState,
-    Animator& animator,
-    Text& text
-)
-    : graphics(_graphics), screens(_screens), gameState(_gameState), actors(_actors)
+    Animator& _animator,
+    Text& text,
+    Clock& _clock
+) : animator(_animator),
+    graphics(_graphics),
+    screens(_screens),
+    gameState(_gameState),
+    actors(_actors),
+    clock(_clock)
 {
     userInterface = new UserInterface(gameState, animator, text);
 }
@@ -51,11 +57,7 @@ void Play::update() {
     for (auto actor : actors) {
         actor->update();
 
-        if (!actor->isActive()) {
-            delete actor;
-        }
-
-        if (actor->isPlayer()) {
+        if (!actor->isOpponent()) {
             continue;
         }
 
@@ -99,9 +101,8 @@ void Play::inputHandler() {
 
     gameState->decreaseBullets();
     sf::FloatRect playerHitbox = player->getTranslatedHitbox();
-
     for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-        if ((*it1)->isPlayer()) {
+        if (!(*it1)->isOpponent()) {
             continue;
         }
 
@@ -112,7 +113,9 @@ void Play::inputHandler() {
             gameState->decreaseDucks();
             gameState->increaseDucksShot();
             gameState->markAuditDuckAsShot(gameState->getDuckAuditIndex() - 1);
+            actors.push_back(new Score(animator, clock, duck->getX(), duck->getY()));
             gameState->setState(GameStateType::HIT);
+            break;
         } else if (gameState->getBullets() == 0) {
             duck->handleEscaping();
             gameState->setState(GameStateType::MISS);
