@@ -3,7 +3,10 @@
 #include "animations.h"  // for AnimationIndex
 #include "animator.h"    // for Animator
 #include <SFML/Graphics/Rect.hpp>  // for FloatRect, Rect::Rect<T>
+#include "constants.h"
 namespace sf { class RenderTarget; }
+
+using namespace Constants;
 
 Score::Score(Animator& _animator, Clock& _clock, double initialX, double initialY)
     : animator(_animator), clock(_clock), spawnTime(_clock.getCurrentTime()) {
@@ -23,7 +26,7 @@ void Score::update() {
     
     y -= SPEED * elapsedTime;
 
-    if (elapsedTime > LIFESPAN) {
+    if (y < 0 || elapsedTime > LIFESPAN) {
         deactivate();
     }
 }

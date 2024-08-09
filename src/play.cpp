@@ -10,8 +10,10 @@
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
 #include "user-interface.h"                 // for UserInterface
-class Animator;  // lines 14-14
-namespace sf { class RenderTarget; }  // lines 15-15
+class Animator;
+class Clock;
+class Text;
+namespace sf { class RenderTarget; }
 
 Play::Play(
     Graphics& _graphics,
@@ -21,13 +23,12 @@ Play::Play(
     Animator& _animator,
     Text& text,
     Clock& _clock
-) : animator(_animator),
-    graphics(_graphics),
+) : graphics(_graphics),
     screens(_screens),
-    gameState(_gameState),
     actors(_actors),
-    clock(_clock)
-{
+    gameState(_gameState),
+    clock(_clock),
+    animator(_animator) {
     userInterface = new UserInterface(gameState, animator, text);
 }
 
@@ -46,83 +47,80 @@ void Play::run(bool handleInput) {
 
 void Play::update() {
     bool isStateChanged = false;
-    if (
-        gameState->getState() == GameStateType::RUNNING &&
-        gameState->timeToShootExpired()
-    ) {
+
+    if (gameState->getState() == GameStateType::RUNNING && gameState->timeToShootExpired()) {
         gameState->setState(GameStateType::MISS);
         isStateChanged = true;
     }
 
-    for (auto actor : actors) {
-        actor->update();
+    for (Actor* actor : actors) {
+        handleActorUpdate(actor, isStateChanged);
+    }
+}
 
-        if (!actor->isOpponent()) {
-            continue;
-        }
+void Play::handleActorUpdate(Actor* actor, bool& isStateChanged) {
+    actor->update();
 
-        // At this point we can safely typecast to a duck
-        Duck* duck = static_cast<Duck*>(actor);
+    if (!actor->isOpponent()) return;
 
-        if (
-            duck->isUpperThresholdReached()
-        ) {
-            duck->deactivate();
-            gameState->decreaseDucks();
-            gameState->setState(GameStateType::FLOWN);
-        }
+    Duck* duck = static_cast<Duck*>(actor);
 
-        if (
-            duck->isFalling() &&
-            duck->isLowerThresholdReached()
-        ) {
-            duck->deactivate();
-            gameState->setState(GameStateType::READY);
-        }
-
-        if (isStateChanged) {
-            duck->handleEscaping();
-        }
+    if (duck->isUpperThresholdReached()) {
+        duck->deactivate();
+        gameState->decreaseDucks();
+        gameState->setState(GameStateType::FLOWN);
+    } else if (duck->isFalling() && duck->isLowerThresholdReached()) {
+        duck->deactivate();
+        gameState->setState(GameStateType::READY);
+    } else if (isStateChanged) {
+        duck->handleEscaping();
     }
 }
 
 void Play::inputHandler() {
-    Player* player = nullptr;
-    for (auto actor : actors) {
-        if (actor->isPlayer()) {
-            player = static_cast<Player*>(actor);
-            break;
-        }
-    }
-
-    if (!player->getShot()) {
-        return;
-    }
+    Player* player = findPlayer();
+    if (!player || !player->getShot()) return;
 
     gameState->decreaseBullets();
-    sf::FloatRect playerHitbox = player->getTranslatedHitbox();
-    for (auto it1 = actors.begin(); it1 != actors.end(); ++it1) {
-        if (!(*it1)->isOpponent()) {
-            continue;
-        }
+    handlePlayerShot(player);
+    player->shotHandled();
+}
 
-        Duck* duck = static_cast<Duck*>(*it1);
+Player* Play::findPlayer() {
+    for (Actor* actor : actors) {
+        if (actor->isPlayer()) {
+            return static_cast<Player*>(actor);
+        }
+    }
+    return nullptr;
+}
+
+void Play::handlePlayerShot(Player* player) {
+    sf::FloatRect playerHitbox = player->getTranslatedHitbox();
+
+    for (Actor* actor : actors) {
+        if (!actor->isOpponent()) continue;
+
+        Duck* duck = static_cast<Duck*>(actor);
 
         if (checkHitboxCollision(duck->getTranslatedHitbox(), playerHitbox)) {
-            duck->handleShot();
-            gameState->decreaseDucks();
-            gameState->increaseDucksShot();
-            gameState->markAuditDuckAsShot(gameState->getDuckAuditIndex() - 1);
-            actors.push_back(new Score(animator, clock, duck->getX(), duck->getY()));
-            gameState->setState(GameStateType::HIT);
-            break;
+            handleDuckShot(duck);
+            return;
         } else if (gameState->getBullets() == 0) {
             duck->handleEscaping();
             gameState->setState(GameStateType::MISS);
+            return;
         }
     }
+}
 
-    player->shotHandled();
+void Play::handleDuckShot(Duck* duck) {
+    duck->handleShot();
+    gameState->decreaseDucks();
+    gameState->increaseDucksShot();
+    gameState->markAuditDuckAsShot(gameState->getDuckAuditIndex() - 1);
+    actors.push_front(new Score(animator, clock, duck->getX(), duck->getY()));
+    gameState->setState(GameStateType::HIT);
 }
 
 void Play::removeInactiveActors() {

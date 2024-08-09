@@ -39,7 +39,7 @@ else()
 endif()
 
 # Enable IWYU
-# set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "include-what-you-use;-Xiwyu;--mapping_file=../mappings.imp")
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "include-what-you-use;-Xiwyu;--mapping_file=../mappings.imp")
 
 # Find SFML
 find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)

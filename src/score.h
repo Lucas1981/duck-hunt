@@ -20,7 +20,7 @@ private:
     Clock& clock;
     ClockType::time_point spawnTime;
     static constexpr double LIFESPAN = 1; //
-    static constexpr double SPEED = 0.03; // Speed of upward movement
+    static constexpr double SPEED = 0.01; // Speed of upward movement
 };
 
 #endif // SCORE_H

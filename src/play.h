@@ -2,14 +2,16 @@
 #define PLAY_H
 
 #include <list>  // for list
-class Actor;  // lines 7-7
+class Actor;
 class Animator;
-class GameState;  // lines 8-8
-class Graphics;  // lines 9-9
-class Screens;  // lines 10-10
-class UserInterface;
-class Text;
 class Clock;
+class Duck;
+class GameState;
+class Graphics;
+class Player;
+class Screens;
+class Text;
+class UserInterface;
 
 class Play {
 public:
@@ -20,23 +22,29 @@ public:
         GameState* _gameState,
         Animator& _animator,
         Text& text,
-        Clock& clock
+        Clock& _clock
     );
     ~Play();
-    void run(bool handleInput);
     
+    void run(bool handleInput);
+
 private:
     void update();
+    void handleActorUpdate(Actor* actor, bool& isStateChanged);
     void inputHandler();
-    void draw();
+    Player* findPlayer();
+    void handlePlayerShot(Player* player);
+    void handleDuckShot(Duck* duck);
     void removeInactiveActors();
-    Animator& animator;
+    void draw();
+    
     Graphics& graphics;
     Screens& screens;
-    GameState* gameState;
     std::list<Actor*>& actors;
-    UserInterface* userInterface;
+    GameState* gameState;
     Clock& clock;
+    Animator& animator;
+    UserInterface* userInterface;
 };
 
 #endif // PLAY_H
