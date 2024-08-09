@@ -5,6 +5,7 @@
 #include "graphics.h"  // for Graphics
 #include "input.h"     // for Input
 #include "screens.h"   // for Screens
+#include "sound.h"
 class GameState;  // lines 14-14
 class StateHandlers;
 
@@ -25,6 +26,7 @@ private:
     Clock clock;
     Screens screens;
     StateHandlers* stateHandlers;
+    Sound sound;
 };
 
 #endif // GAME_H

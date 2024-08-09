@@ -10,6 +10,7 @@
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
 #include "user-interface.h"                 // for UserInterface
+#include "sound.h"
 class Animator;
 class Clock;
 class Text;
@@ -22,13 +23,15 @@ Play::Play(
     GameState* _gameState,
     Animator& _animator,
     Text& text,
-    Clock& _clock
+    Clock& _clock,
+    Sound& _sound
 ) : graphics(_graphics),
     screens(_screens),
     actors(_actors),
     gameState(_gameState),
     clock(_clock),
-    animator(_animator) {
+    animator(_animator),
+    sound(_sound) {
     userInterface = new UserInterface(gameState, animator, text);
 }
 
@@ -84,6 +87,7 @@ void Play::inputHandler() {
     gameState->decreaseBullets();
     handlePlayerShot(player);
     player->shotHandled();
+    sound.enqueue(SoundEffect::SHOOT);
 }
 
 Player* Play::findPlayer() {

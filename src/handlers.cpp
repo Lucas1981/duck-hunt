@@ -18,14 +18,16 @@ StateHandlers::StateHandlers(
     Input& _input,
     Screens& _screens,
     Graphics& _graphics,
-    Clock& _clock
+    Clock& _clock,
+    Sound& _sound
 ) : gameState(_gameState),
     input(_input),
     screens(_screens),
     graphics(_graphics),
-    clock(_clock) {
+    clock(_clock),
+    sound(_sound) {
     play = new Play(
-        graphics, screens, actors, gameState, animator, text, clock
+        graphics, screens, actors, gameState, animator, text, clock, sound
     );
     resetActors();
 }
@@ -142,7 +144,7 @@ void StateHandlers::handleResetState() {
     } else {
         resetActors();
         gameState->startTimeToShoot();
-        actors.push_front(new Duck(animator, clock, gameState->getRoundSpeed()));
+        actors.push_front(new Duck(animator, clock, sound, gameState->getRoundSpeed()));
         gameState->reloadBullets();
         gameState->setState(GameStateType::RUNNING);
     }
@@ -160,5 +162,5 @@ void StateHandlers::drawText(const std::string& str) {
 
 void StateHandlers::resetActors() {
     actors.clear();
-    actors.push_back(new Player(input, animator));
+    actors.push_back(new Player(input, animator, sound));
 }

@@ -4,6 +4,7 @@
 #include "animations.h"            // for AnimationIndex
 #include "animator.h"              // for Animator
 #include "constants.h"             // for UNIT_SIZE
+#include "sound.h"
 namespace sf { class RenderTarget; }
 
 using namespace Constants;
@@ -18,9 +19,11 @@ std::uniform_int_distribution<> Duck::startXDistribution(
 Duck::Duck(
     Animator& _animator,
     Clock& _clock,
+    Sound& _sound,
     double _speed
 ) : clock(_clock),
     animator(_animator),
+    sound(_sound),
     speed(_speed)
 {
     x = getRandomStartX();
@@ -33,6 +36,8 @@ Duck::Duck(
     active = true;
     handleDirectionChange();
     initializeHitboxes();
+    sound.enqueue(SoundEffect::QUACK);
+    lastQuack = clock.getCurrentTime();
 }
 
 Duck::~Duck() {
@@ -53,23 +58,14 @@ int Duck::getRandomStartX() {
 }
 
 void Duck::update() {
-    if (
-        state == AgentState::SHOT &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            clock.getCurrentTime() - timeShot
-        ).count() > TIME_TO_FALL
-    ) {
-        handleFalling();
+    ClockType::time_point currentTime = clock.getCurrentTime();
+
+    if (state == AgentState::SHOT) {
+        handleFallingState(currentTime);
     }
 
-    if (
-        state == AgentState::FLYING &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            clock.getCurrentTime() - lastDirectionChange
-        ).count() > TIME_TO_DIRECTION_CHANGE
-    ) {
-        lastDirectionChange = clock.getCurrentTime();
-        handleDirectionChange();
+    if (state == AgentState::FLYING) {
+        handleFlyingState(currentTime);
     }
 
     double elapsedTime = clock.getElapsedTime();
@@ -93,6 +89,38 @@ void Duck::update() {
     if (y > LOWER_BOUND) {
         y = LOWER_BOUND;
         directionY *= -1;
+    }
+}
+
+void Duck::handleFallingState(ClockType::time_point currentTime) {
+    if (
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            currentTime - timeShot
+        ).count() > TIME_TO_FALL
+    ) {
+        state = AgentState::FALLING;
+        directionY = 1;
+        animationKey = Animations::FALLING;
+    }
+}
+
+void Duck::handleFlyingState(ClockType::time_point currentTime) {
+    if (
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            currentTime - lastDirectionChange
+        ).count() > TIME_TO_DIRECTION_CHANGE
+    ) {
+        lastDirectionChange = currentTime;
+        handleDirectionChange();
+    }
+
+    if (
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            currentTime - lastQuack
+        ).count() > TIME_TO_QUACK
+    ) {
+        lastQuack = currentTime;
+        sound.enqueue(SoundEffect::QUACK);
     }
 }
 
@@ -122,12 +150,6 @@ void Duck::handleShot() {
     directionX = 0;
     directionY = 0;
     animationKey = Animations::SHOT;
-}
-
-void Duck::handleFalling() {
-    state = AgentState::FALLING;
-    directionY = 1;
-    animationKey = Animations::FALLING;
 }
 
 void Duck::handleEscaping() {

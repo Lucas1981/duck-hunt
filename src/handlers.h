@@ -12,6 +12,7 @@ class Graphics;
 class Input;
 class Play;
 class Screens;
+class Sound;
 
 class StateHandlers {
 public:
@@ -20,7 +21,8 @@ public:
         Input& _input,
         Screens& _screens,
         Graphics& _graphics,
-        Clock& _clock
+        Clock& _clock,
+        Sound& sound
     );
     ~StateHandlers();
     void handleTitleScreenState();
@@ -50,6 +52,7 @@ private:
     Play* play;
     std::list<Actor*> actors;  // Use a list to store agents
     Animator animator;
+    Sound& sound;
 };
 
 #endif

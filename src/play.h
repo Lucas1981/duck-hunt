@@ -12,6 +12,7 @@ class Player;
 class Screens;
 class Text;
 class UserInterface;
+class Sound;
 
 class Play {
 public:
@@ -22,7 +23,8 @@ public:
         GameState* _gameState,
         Animator& _animator,
         Text& text,
-        Clock& _clock
+        Clock& _clock,
+        Sound& _sound
     );
     ~Play();
     
@@ -45,6 +47,7 @@ private:
     Clock& clock;
     Animator& animator;
     UserInterface* userInterface;
+    Sound& sound;
 };
 
 #endif // PLAY_H

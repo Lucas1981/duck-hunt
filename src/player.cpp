@@ -5,10 +5,11 @@
 #include "animations.h"             // for AnimationIndex
 #include "animator.h"               // for Animator
 #include "input.h"                  // for Input
+#include "sound.h"
 namespace sf { class RenderTarget; }  // lines 7-7
 
-Player::Player(Input& _input, Animator& _animator)
-    : input(_input), animator(_animator) {
+Player::Player(Input& _input, Animator& _animator, Sound& _sound)
+    : input(_input), animator(_animator), sound(_sound) {
     x = 240.0;
     y = 240.0;
     type = AgentType::PLAYER;
@@ -42,6 +43,7 @@ void Player::update() {
     if (canShoot && input.isMouseButtonPressed(static_cast<sf::Mouse::Button>(0))) {
         shot = true;
         canShoot = false;
+        sound.enqueue(SoundEffect::SHOOT);
     }
 
     if (input.isMouseButtonReleased(static_cast<sf::Mouse::Button>(0))) {

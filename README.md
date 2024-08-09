@@ -40,7 +40,7 @@ Todo:
 - [x] Include tallying mechanism at the end of the round
 - [x] Display target in the UI
 - [x] Add score animation
-- [ ] Add sounds
+- [x] Add sounds
 - [ ] Substitute assets and expand animations
 - [ ] ?Consider taking the player out of the agent pool?
 - [ ] Test hit boxes

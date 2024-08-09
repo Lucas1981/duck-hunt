@@ -69,6 +69,7 @@ void Game::run() {
                 return;
         }
 
+        sound.handleQueue();
         graphics.displayCanvas();
         graphics.displayWindow();
     }
@@ -78,7 +79,9 @@ bool Game::initialize() {
     std::cout << "Initializing...\n";
     gameState = new GameState(clock);
     input.setWindow(graphics.getWindow());
-    stateHandlers = new StateHandlers(gameState, input, screens, graphics, clock);
+    stateHandlers = new StateHandlers(
+        gameState, input, screens, graphics, clock, sound
+    );
     return true;
 }
 

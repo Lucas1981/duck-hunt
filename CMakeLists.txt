@@ -42,7 +42,7 @@ endif()
 set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "include-what-you-use;-Xiwyu;--mapping_file=../mappings.imp")
 
 # Find SFML
-find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
+find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 
 # Add the executable
 add_executable(DuckHunt 
@@ -53,7 +53,7 @@ add_executable(DuckHunt
     src/input.cpp
     src/graphics.cpp
     src/clock.cpp
-    # src/sound.cpp
+    src/sound.cpp
     src/frames.cpp
     src/animator.cpp
     src/player.cpp
@@ -68,4 +68,4 @@ add_executable(DuckHunt
 )
 
 # Link SFML libraries
-target_link_libraries(DuckHunt sfml-system sfml-window sfml-graphics)
+target_link_libraries(DuckHunt sfml-system sfml-window sfml-graphics sfml-audio)
