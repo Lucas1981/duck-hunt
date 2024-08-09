@@ -6,10 +6,10 @@ brew update
 # For development
 
 # Install cmake
-brew cmake;
+brew install cmake;
 
 # Install IWYU
-brew include-what-you-use;
+brew install include-what-you-use;
 
 # For the product
 
