@@ -6,10 +6,11 @@
 #include "animator.h"               // for Animator
 #include "input.h"                  // for Input
 #include "sound.h"
+#include "state.h"
 namespace sf { class RenderTarget; }  // lines 7-7
 
-Player::Player(Input& _input, Animator& _animator, Sound& _sound)
-    : input(_input), animator(_animator), sound(_sound) {
+Player::Player(Input& _input, GameState* _gameState, Animator& _animator, Sound& _sound)
+    : input(_input), animator(_animator), gameState(_gameState), sound(_sound) {
     x = 240.0;
     y = 240.0;
     type = AgentType::PLAYER;
@@ -40,7 +41,11 @@ void Player::update() {
     if (y < UPPER_BOUND) y = UPPER_BOUND;
     if (y > LOWER_BOUND) y = LOWER_BOUND;
 
-    if (canShoot && input.isMouseButtonPressed(static_cast<sf::Mouse::Button>(0))) {
+    if (
+        gameState->getBullets() > 0 &&
+        canShoot &&
+        input.isMouseButtonPressed(static_cast<sf::Mouse::Button>(0))
+    ) {
         shot = true;
         canShoot = false;
         sound.enqueue(SoundEffect::SHOOT);

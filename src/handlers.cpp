@@ -162,5 +162,5 @@ void StateHandlers::drawText(const std::string& str) {
 
 void StateHandlers::resetActors() {
     actors.clear();
-    actors.push_back(new Player(input, animator, sound));
+    actors.push_back(new Player(input, gameState, animator, sound));
 }

@@ -7,12 +7,13 @@
 class Animator;  // lines 6-6
 class Input;  // lines 7-7
 class Sound;
+class GameState;
 namespace sf { class RenderTarget; }  // lines 8-8
 
 using namespace Constants;
 class Player : public Actor {
 public:
-    Player(Input& input, Animator& animator, Sound& _sound);
+    Player(Input& input,  GameState* _gameState, Animator& animator, Sound& _sound);
     void update() override;
     void draw(sf::RenderTarget& target) override;
     sf::FloatRect getTranslatedHitbox() const override;
@@ -28,6 +29,7 @@ private:
     bool canShoot;
     Input& input;
     Animator& animator;
+    GameState* gameState;
     sf::FloatRect hitbox;
     Sound& sound;
 };
