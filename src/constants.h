@@ -3,8 +3,8 @@
 
 namespace Constants {
     constexpr double UNIT_SIZE = 128;
-    constexpr double SCREEN_WIDTH = 800;
-    constexpr double SCREEN_HEIGHT = 600;
+    constexpr double SCREEN_WIDTH = 1024;
+    constexpr double SCREEN_HEIGHT = 768;
 }
 
 #endif // CONSTANTS_H

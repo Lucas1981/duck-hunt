@@ -41,7 +41,13 @@ Todo:
 - [x] Display target in the UI
 - [x] Add score animation
 - [x] Add sounds
-- [ ] Substitute assets and expand animations
+- [ ] Substitute assets and expand animations:
+    - [x] Background
+    - [x] Duck animations
+    - [ ] Fix first duck animation (inner wing should be white)
+    - [ ] Bullet and duck symbols
+    - [ ] Title screen
+- [ ] Substitute sounds
 - [ ] ?Consider taking the player out of the agent pool?
 - [ ] Test hit boxes
 - [ ] Test application with leak trackers

@@ -42,6 +42,7 @@ public:
 private:
     static constexpr int VERTICAL_ANCHOR = 300;
     void drawText(const std::string& str);
+    void clearActors();
     void resetActors();
     GameState* gameState;
     Input& input;

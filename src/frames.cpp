@@ -6,7 +6,7 @@
 
 Frames::Frames() {
     // Default constructor
-    loadTexture("../assets/spritesheet.png");
+    loadTexture("../assets/spritesheet-2.png");
     addFrame(0, 0, 128, 128); // 0 red target
     addFrame(128, 0, 128, 128); // 1 flying right frame 1
     addFrame(256, 0, 128, 128); // 2 flying right frame 2

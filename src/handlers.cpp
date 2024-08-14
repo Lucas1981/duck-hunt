@@ -34,10 +34,7 @@ StateHandlers::StateHandlers(
 
 StateHandlers::~StateHandlers() {
     delete play;
-    for (auto actor : actors) {
-        delete actor;
-    }
-    actors.clear();
+    clearActors();
 }
 
 void StateHandlers::handleTitleScreenState() {
@@ -161,6 +158,13 @@ void StateHandlers::drawText(const std::string& str) {
 }
 
 void StateHandlers::resetActors() {
-    actors.clear();
+    clearActors();
     actors.push_back(new Player(input, gameState, animator, sound));
+}
+
+void StateHandlers::clearActors() {
+    for (auto actor : actors) {
+        delete actor;
+    }
+    actors.clear();
 }

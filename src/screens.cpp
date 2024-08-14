@@ -13,7 +13,7 @@ Screens::~Screens() {
 
 void Screens::loadScreens() {
     loadScreenTexture(ScreenType::TITLE_SCREEN, "../assets/title-screen.png");
-    loadScreenTexture(ScreenType::GAME_SCREEN, "../assets/background.png");
+    loadScreenTexture(ScreenType::GAME_SCREEN, "../assets/background-2.png");
 }
 
 void Screens::loadScreenTexture(ScreenType screenType, const std::string& filePath) {
