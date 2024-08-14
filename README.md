@@ -47,6 +47,7 @@ Todo:
     - [ ] Fix first duck animation (inner wing should be white)
     - [ ] Bullet and duck symbols
     - [ ] Title screen
+- [ ] Implement background / foreground distinctions
 - [ ] Substitute sounds
 - [ ] ?Consider taking the player out of the agent pool?
 - [ ] Test hit boxes
