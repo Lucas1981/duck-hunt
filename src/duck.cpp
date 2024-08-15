@@ -46,7 +46,7 @@ Duck::~Duck() {
 
 void Duck::initializeHitboxes() {
     hitboxes[Animations::FLY_HORIZONTAL_RIGHT] = sf::FloatRect(0, 0, UNIT_SIZE, UNIT_SIZE);
-    // Add other hitboxes as needed
+    hitboxes[Animations::FLY_HORIZONTAL_LEFT] = sf::FloatRect(0, 0, UNIT_SIZE, UNIT_SIZE);
 }
 
 int Duck::getRandomDirection() {
@@ -129,6 +129,10 @@ void Duck::handleDirectionChange() {
         directionX = getRandomDirection();
         directionY = getRandomDirection();
     } while (directionX == 0 && directionY == 0);
+
+    animationKey = directionX == 1 ?
+        Animations::FLY_HORIZONTAL_RIGHT :
+        Animations::FLY_HORIZONTAL_LEFT;
 }
 
 void Duck::draw(sf::RenderTarget& target) {

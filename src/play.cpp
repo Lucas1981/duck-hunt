@@ -24,7 +24,8 @@ Play::Play(
     Animator& _animator,
     Text& text,
     Clock& _clock,
-    Sound& _sound
+    Sound& _sound,
+    Input& input
 ) : graphics(_graphics),
     screens(_screens),
     actors(_actors),
@@ -33,9 +34,11 @@ Play::Play(
     animator(_animator),
     sound(_sound) {
     userInterface = new UserInterface(gameState, animator, text);
+    player = new Player(input, gameState, animator, sound);
 }
 
 Play::~Play() {
+    delete player;
     delete userInterface;
 }
 
@@ -56,6 +59,7 @@ void Play::update() {
         isStateChanged = true;
     }
 
+    player->update();
     for (Actor* actor : actors) {
         handleActorUpdate(actor, isStateChanged);
     }
@@ -81,25 +85,15 @@ void Play::handleActorUpdate(Actor* actor, bool& isStateChanged) {
 }
 
 void Play::inputHandler() {
-    Player* player = findPlayer();
-    if (!player || !player->getShot()) return;
+    if (!player->getShot()) return;
 
     gameState->decreaseBullets();
-    handlePlayerShot(player);
+    handlePlayerShot();
     player->shotHandled();
     sound.enqueue(SoundEffect::SHOOT);
 }
 
-Player* Play::findPlayer() {
-    for (Actor* actor : actors) {
-        if (actor->isPlayer()) {
-            return static_cast<Player*>(actor);
-        }
-    }
-    return nullptr;
-}
-
-void Play::handlePlayerShot(Player* player) {
+void Play::handlePlayerShot() {
     sf::FloatRect playerHitbox = player->getTranslatedHitbox();
 
     for (Actor* actor : actors) {
@@ -140,11 +134,15 @@ void Play::removeInactiveActors() {
 
 void Play::draw() {
     sf::RenderTarget& renderTarget = graphics.getCanvas();
-    screens.drawScreen(renderTarget, ScreenType::GAME_SCREEN);
+    screens.drawScreen(renderTarget, ScreenType::BACKGROUND);
 
     for (Actor* actor : actors) {
         actor->draw(renderTarget);
     }
 
+    screens.drawScreen(renderTarget, ScreenType::FOREGROUND);
+
     userInterface->draw(graphics.getCanvas());
+
+    player->draw(renderTarget);
 }

@@ -44,12 +44,14 @@ Todo:
 - [ ] Substitute assets and expand animations:
     - [x] Background
     - [x] Duck animations
-    - [ ] Fix first duck animation (inner wing should be white)
+    - [x] Fix first duck animation (inner wing should be white)
     - [ ] Bullet and duck symbols
     - [ ] Title screen
-- [ ] Implement background / foreground distinctions
+- [x] Add left-facing variant of the flying duck animation
+- [x] Implement background / foreground distinctions
+- [x] Take the player out of the agents pool
+- [ ] Adjust starting baseline for new duck spawning
 - [ ] Substitute sounds
-- [ ] ?Consider taking the player out of the agent pool?
 - [ ] Test hit boxes
 - [ ] Test application with leak trackers
 

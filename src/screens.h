@@ -9,7 +9,8 @@ namespace sf { class RenderTarget; }
 
 enum class ScreenType {
     TITLE_SCREEN,
-    GAME_SCREEN,
+    FOREGROUND,
+    BACKGROUND
 };
 
 class Screens {

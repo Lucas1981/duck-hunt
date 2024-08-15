@@ -8,7 +8,6 @@
 #include "graphics.h"                       // for Graphics
 #include "input.h"                          // for Input
 #include "play.h"                           // for Play
-#include "player.h"                         // for Player
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
 class Clock;  // lines 15-15
@@ -27,14 +26,22 @@ StateHandlers::StateHandlers(
     clock(_clock),
     sound(_sound) {
     play = new Play(
-        graphics, screens, actors, gameState, animator, text, clock, sound
+        graphics,
+        screens,
+        actors,
+        gameState,
+        animator,
+        text,
+        clock,
+        sound,
+        input
     );
     resetActors();
 }
 
 StateHandlers::~StateHandlers() {
     delete play;
-    clearActors();
+    resetActors();
 }
 
 void StateHandlers::handleTitleScreenState() {
@@ -158,11 +165,6 @@ void StateHandlers::drawText(const std::string& str) {
 }
 
 void StateHandlers::resetActors() {
-    clearActors();
-    actors.push_back(new Player(input, gameState, animator, sound));
-}
-
-void StateHandlers::clearActors() {
     for (auto actor : actors) {
         delete actor;
     }
