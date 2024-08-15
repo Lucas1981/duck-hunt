@@ -50,7 +50,7 @@ Todo:
 - [x] Add left-facing variant of the flying duck animation
 - [x] Implement background / foreground distinctions
 - [x] Take the player out of the agents pool
-- [ ] Adjust starting baseline for new duck spawning
+- [x] Adjust starting baseline for new duck spawning
 - [ ] Substitute sounds
 - [ ] Test hit boxes
 - [ ] Test application with leak trackers
