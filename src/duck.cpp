@@ -35,6 +35,7 @@ Duck::Duck(
     animationKey = Animations::FLY_HORIZONTAL_RIGHT;
     active = true;
     handleDirectionChange();
+    directionY = -1; // Override initial direction so duck goes up
     initializeHitboxes();
     sound.enqueue(SoundEffect::QUACK);
     lastQuack = clock.getCurrentTime();

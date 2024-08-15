@@ -35,8 +35,8 @@ private:
     static constexpr double LEFT_BOUND = UNIT_SIZE / 2;
     static constexpr double RIGHT_BOUND = SCREEN_WIDTH + (UNIT_SIZE / 2);
     static constexpr double UPPER_BOUND = UNIT_SIZE / 2;
-    static constexpr double LOWER_BOUND = SCREEN_HEIGHT * 0.8;
-    static constexpr double TIME_TO_DIRECTION_CHANGE = 500;
+    static constexpr double LOWER_BOUND = 580;
+    static constexpr double TIME_TO_DIRECTION_CHANGE = 600;
     static constexpr double TIME_TO_FALL = 500;
     static constexpr double FALLING_SPEED = 300;
     static constexpr double TIME_TO_QUACK = 800;
