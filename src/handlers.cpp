@@ -50,6 +50,13 @@ void StateHandlers::handleTitleScreenState() {
         gameState->setState(GameStateType::ROUND_BEGIN);
     }
     screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
+    text.drawText(
+        graphics.getCanvas(),
+        "Press enter to start",
+        (SCREEN_WIDTH + (2 * UNIT_SIZE)) / 2,
+        730,
+        TextAlignment::CENTER
+    );
 }
 
 void StateHandlers::handleRoundBeginState() {

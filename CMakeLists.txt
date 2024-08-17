@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project name
-project(DuckHunt)
+project(DuckShot)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -45,7 +45,7 @@ set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "include-what-you-use;-Xiwyu;--mapping_file=.
 find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
 
 # Add the executable
-add_executable(DuckHunt 
+add_executable(DuckShot 
     src/main.cpp 
     src/game.cpp
     src/state.cpp
@@ -68,4 +68,4 @@ add_executable(DuckHunt
 )
 
 # Link SFML libraries
-target_link_libraries(DuckHunt sfml-system sfml-window sfml-graphics sfml-audio)
+target_link_libraries(DuckShot sfml-system sfml-window sfml-graphics sfml-audio)

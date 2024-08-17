@@ -10,7 +10,7 @@ cmake .. # -DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 
 # Run the game
-./DuckHunt
+./DuckShot
 
 # Return to root dir
 cd ..
