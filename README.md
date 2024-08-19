@@ -14,7 +14,18 @@ So having finished the whole setup of the game, how do I look back on that proce
 
 One thing I definitely might reconsider is how to draw graphics. Right now, I just draw them and there is no order except for the order in which they just occur. I actually took out the main player class from my pool of actors so that I could draw that animation at the right time. Whether or not that is the right way to treat the actor - @igorski claimed it is actually a part of the UI so its representation should be handled by the UI class - can be debated. But to have the drawing hierarchy depend on the order in which elements are handled seems a little naive. I should probably stage all of these drawing actions, use a queue like I do for the sounds. Actually, you can use a priority queue and enqueue all the graphical assets with a "z-index" for priority, then dequeue the whole thing once the scene is set up in priority-order.
 
-I would probably also add some more tools to make things neater and more precise, like Clang-Tidy or Cppcheck. I'd do this early on, so that you kind of can keep up with the suggested changes, much like in the case of the IWYU tool. I'd also set up a Docker instance and run it with the ability to monitor the memory leaks. Clang-Tidy and Cppcheck prove tricky at times though, and annoyingly Cppcheck doesn't seem capable of applying the changes it suggests. I'd probably also set up a Docker image so I can monitor memory allocation and spot mem-leaks in runtime if they occur. I'll save it 
+On SFML and SDL2: I feel like I had to convert a lot between float, long, int, size_t, all sorts of casting going on, when I was using SFML in this case. Somehow SDL2 felt a little easier on the conversions. Plus, it seems Web Assembler doesn't play at all with SFML, so that's a pitty. Probably on next tryouts I'll stick to SDL2. I do wonder if I cast more than I needed to had I gotten some of the compatibility of the variable types right from the beginning. Probably drawing this all out does help before you dive into it.
+
+I would probably also add some more tools to make things neater and more precise, like Clang-Tidy or Cppcheck. I'd do this early on, so that you kind of can keep up with the suggested changes, much like in the case of the IWYU tool. I'd also set up a Docker instance and run it with the ability to monitor the memory leaks. Clang-Tidy and Cppcheck prove tricky at times though, and annoyingly Cppcheck doesn't seem capable of applying the changes it suggests. I'd probably also set up a Docker image so I can monitor memory allocation and spot mem-leaks in runtime if they occur. I'll save it all for a next project.
+
+## How to run
+
+I haven't bothered to put it all in the proper folders to build it and have it shippable, so you can run it from the command line (on a macOS at least:)
+
+```
+$ ./install-dependencies.sh # gets cmake, IWYU and the SFML stuff
+$ ./build.sh # kicks CMake into gear and starts the app after build
+```
 
 ## Todo
 
