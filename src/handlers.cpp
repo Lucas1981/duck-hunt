@@ -10,6 +10,7 @@
 #include "play.h"                           // for Play
 #include "screens.h"                        // for ScreenType, Screens
 #include "state.h"                          // for GameState, GameStateType
+#include "sound.h"
 class Clock;  // lines 15-15
 
 StateHandlers::StateHandlers(
@@ -47,7 +48,7 @@ StateHandlers::~StateHandlers() {
 void StateHandlers::handleTitleScreenState() {
     if (input.isKeyPressed(sf::Keyboard::Enter)) {
         gameState->resetGame();
-        gameState->setState(GameStateType::ROUND_BEGIN);
+        setupRoundBegin();
     }
     screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
     text.drawText(
@@ -101,15 +102,19 @@ void StateHandlers::handleTallyState() {
     bool result = gameState->performTally();
 
     if (result) {
+        sound.enqueue(SoundEffect::TALLY);
         gameState->setState(GameStateType::HOLD);
     } else {
         if (gameState->isTargetMet()) {
             if (gameState->isGameFinished()) {
+                sound.enqueue(SoundEffect::GAME_WON);
                 gameState->setState(GameStateType::FINISHED);
             } else {
+                sound.enqueue(SoundEffect::ROUND_BEAT);
                 gameState->setState(GameStateType::ROUND_WON);
             }
         } else {
+            sound.enqueue(SoundEffect::GAME_OVER);
             gameState->setState(GameStateType::GAME_OVER);
         }
     }
@@ -124,17 +129,17 @@ void StateHandlers::handleHoldState() {
 }
 
 void StateHandlers::handleRoundWonState() {
-    if (gameState->getTimeSinceLastStateChange() > 2) {
+    if (gameState->getTimeSinceLastStateChange() > 3) {
         gameState->increaseRound();
         gameState->resetDucksForRound();
-        gameState->setState(GameStateType::ROUND_BEGIN);
+        setupRoundBegin();
     }
     play->run(false);
     drawText("You beat the round!");
 }
 
 void StateHandlers::handleGameOverState() {
-    if (gameState->getTimeSinceLastStateChange() > 2) {
+    if (gameState->getTimeSinceLastStateChange() > 3) {
         gameState->setState(GameStateType::TITLE_SCREEN);
     }
     play->run(false);
@@ -176,4 +181,9 @@ void StateHandlers::resetActors() {
         delete actor;
     }
     actors.clear();
+}
+
+void StateHandlers::setupRoundBegin() {
+    gameState->setState(GameStateType::ROUND_BEGIN);
+    sound.enqueue(SoundEffect::NEW_LEVEL);
 }

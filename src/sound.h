@@ -9,10 +9,16 @@
 
 // Enum representing different sound effects
 enum class SoundEffect {
+    NEW_LEVEL,
     SHOOT,
-    QUACK,
-    MISS,
-    // Add other sound effects here
+    QUACK_FLY,
+    QUACK_SHOT,
+    FALL,
+    DROP,
+    TALLY,
+    GAME_OVER,
+    ROUND_BEAT,
+    GAME_WON,
 };
 
 class Sound {
@@ -22,6 +28,7 @@ public:
 
     void enqueue(SoundEffect soundEffect);
     void handleQueue();
+    void stopAll();
 
 private:
     void loadSounds();

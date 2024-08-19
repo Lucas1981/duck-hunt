@@ -37,7 +37,7 @@ Duck::Duck(
     handleDirectionChange();
     directionY = -1; // Override initial direction so duck goes up
     initializeHitboxes();
-    sound.enqueue(SoundEffect::QUACK);
+    sound.enqueue(SoundEffect::QUACK_FLY);
     lastQuack = clock.getCurrentTime();
 }
 
@@ -99,6 +99,7 @@ void Duck::handleFallingState(ClockType::time_point currentTime) {
             currentTime - timeShot
         ).count() > TIME_TO_FALL
     ) {
+        sound.enqueue(SoundEffect::FALL);
         state = AgentState::FALLING;
         directionY = 1;
         animationKey = Animations::FALLING;
@@ -121,7 +122,7 @@ void Duck::handleFlyingState(ClockType::time_point currentTime) {
         ).count() > TIME_TO_QUACK
     ) {
         lastQuack = currentTime;
-        sound.enqueue(SoundEffect::QUACK);
+        sound.enqueue(SoundEffect::QUACK_FLY);
     }
 }
 
@@ -155,6 +156,7 @@ void Duck::handleShot() {
     directionX = 0;
     directionY = 0;
     animationKey = Animations::SHOT;
+    sound.enqueue(SoundEffect::QUACK_SHOT);
 }
 
 void Duck::handleEscaping() {

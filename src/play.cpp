@@ -77,6 +77,8 @@ void Play::handleActorUpdate(Actor* actor, bool& isStateChanged) {
         gameState->decreaseDucks();
         gameState->setState(GameStateType::FLOWN);
     } else if (duck->isFalling() && duck->isLowerThresholdReached()) {
+        sound.stopAll();
+        sound.enqueue(SoundEffect::DROP);
         duck->deactivate();
         gameState->setState(GameStateType::READY);
     } else if (isStateChanged) {
@@ -102,6 +104,7 @@ void Play::handlePlayerShot() {
         Duck* duck = static_cast<Duck*>(actor);
 
         if (checkHitboxCollision(duck->getTranslatedHitbox(), playerHitbox)) {
+            sound.stopAll();
             handleDuckShot(duck);
             return;
         } else if (gameState->getBullets() == 0) {
