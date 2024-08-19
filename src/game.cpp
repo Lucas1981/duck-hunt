@@ -16,6 +16,8 @@ void Game::run() {
         return;
     }
 
+    sound.enqueue(SoundEffect::TITLE_SCREEN);
+
     while (graphics.isWindowOpen()) {
         clock.setTimer();
         input.update();

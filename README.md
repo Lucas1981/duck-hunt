@@ -48,28 +48,26 @@ I would probably add some more tools to make things neater and more precise, lik
 - [x] Display target in the UI
 - [x] Add score animation
 - [x] Add sounds
-- [ ] Substitute assets and expand animations:
-    - [x] Background
-    - [x] Duck animations
-    - [x] Fix first duck animation (inner wing should be white)
-    - [ ] Bullet and duck symbols
-    - [x] Title screen
 - [x] Add left-facing variant of the flying duck animation
 - [x] Implement background / foreground distinctions
 - [x] Take the player out of the agents pool
 - [x] Adjust starting baseline for new duck spawning
-- [ ] Figure out how to stop all or somes sound playback prematurely
-- [ ] Substitute and expand sounds:
-    - [ ] For Title screen (music)
-    - [ ] For start round (music)
-    - [ ] For round won (music)
-    - [ ] For round lost (music)
-    - [ ] For game won (music)
-    - [ ] For shot
-    - [ ] For duck flying
-    - [ ] For duck hit
-    - [ ] For duck falling
-    - [ ] For duck fallen
-- [ ] Test hit boxes
-- [ ] Test application with leak trackers
+- [x] Figure out how to stop all or somes sound playback prematurely
+- [x] Substitute and expand sounds:
+    - [x] For Title screen (music)
+    - [x] For start round (music)
+    - [x] For round won (music)
+    - [x] For round lost (music)
+    - [x] For game won (music)
+    - [x] For shot
+    - [x] For duck flying
+    - [x] For duck hit
+    - [x] For duck falling
+    - [x] For duck fallen
+- [ ] Substitute assets and expand animations:
+    - [x] Background
+    - [x] Duck animations
+    - [x] Fix first duck animation (inner wing should be white)
+    - [x] Title screen
+    - [ ] Bullet, crosshairs and duck symbols
 

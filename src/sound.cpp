@@ -13,6 +13,10 @@ Sound::~Sound() {
 
 void Sound::loadSounds() {
     // Load each sound buffer and store it in the map with its corresponding enum value
+    if (!soundBuffers[SoundEffect::TITLE_SCREEN].loadFromFile("../assets/sounds/title-screen.wav")) {
+        std::cerr << "Failed to load gunshot.wav" << std::endl;
+    }
+
     if (!soundBuffers[SoundEffect::DROP].loadFromFile("../assets/sounds/drop.wav")) {
         std::cerr << "Failed to load gunshot.wav" << std::endl;
     }

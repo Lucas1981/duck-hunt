@@ -48,6 +48,7 @@ StateHandlers::~StateHandlers() {
 void StateHandlers::handleTitleScreenState() {
     if (input.isKeyPressed(sf::Keyboard::Enter)) {
         gameState->resetGame();
+        sound.stopAll();
         setupRoundBegin();
     }
     screens.drawScreen(graphics.getCanvas(), ScreenType::TITLE_SCREEN);
@@ -140,7 +141,7 @@ void StateHandlers::handleRoundWonState() {
 
 void StateHandlers::handleGameOverState() {
     if (gameState->getTimeSinceLastStateChange() > 3) {
-        gameState->setState(GameStateType::TITLE_SCREEN);
+        setupTitleScreen();
     }
     play->run(false);
     drawText("Game over");
@@ -148,7 +149,7 @@ void StateHandlers::handleGameOverState() {
 
 void StateHandlers::handleFinishedState() {
     if (gameState->getTimeSinceLastStateChange() > 3) {
-        gameState->setState(GameStateType::TITLE_SCREEN);
+        setupTitleScreen();
     }
     play->run(false);
     drawText("Congratulations! You beat the game!");
@@ -186,4 +187,9 @@ void StateHandlers::resetActors() {
 void StateHandlers::setupRoundBegin() {
     gameState->setState(GameStateType::ROUND_BEGIN);
     sound.enqueue(SoundEffect::NEW_LEVEL);
+}
+
+void StateHandlers::setupTitleScreen() {
+    sound.enqueue(SoundEffect::TITLE_SCREEN);
+    gameState->setState(GameStateType::TITLE_SCREEN);
 }

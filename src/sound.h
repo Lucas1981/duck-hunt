@@ -9,6 +9,7 @@
 
 // Enum representing different sound effects
 enum class SoundEffect {
+    TITLE_SCREEN,
     NEW_LEVEL,
     SHOOT,
     QUACK_FLY,

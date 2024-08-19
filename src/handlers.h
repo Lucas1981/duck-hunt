@@ -45,6 +45,7 @@ private:
     void drawText(float x, float y, const std::string& str);
     void resetActors();
     void setupRoundBegin();
+    void setupTitleScreen();
     GameState* gameState;
     Input& input;
     Screens& screens;
